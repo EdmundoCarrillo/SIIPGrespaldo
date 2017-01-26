@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link href="resources/css/siipg.css" rel="stylesheet" type="text/css"/>
+        <title>SIIPG</title>
+    </h:head>
+
+    <style>
+        .ui-growl {   
+            position:fixed;
+            top: 12%;
+        }
+    </style>
+
+    <h:body style="background-color:whitesmoke;">
+
+        <h:form id="VariableListForm">
+            <p:dataTable id="varDataList" value="#{variableController.items}" var="variable" widgetVar="variablesTable" 
+                         style="text-align: left; border-collapse: collapse; margin-bottom: 20px;"
+                         paginator="true" rows="15"  
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="15,20,25,30" 
+                         currentPageReportTemplate="({currentPage} de {totalPages})" 
+                         paginatorPosition="bottom"
+                         selectionMode="single" selection="#{variableController.current}"
+                         rowKey="#{variable.id}"
+                         emptyMessage="No se encontraron coincidencias para la descripción dada.">
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column  filterBy="#{variable.nombre}" filterMatchMode="contains" filterStyle="width: 100%;">
+                    <f:facet name="header">
+                        <h:outputText value="Variable"/>
+                    </f:facet>
+                    <h:outputText value="#{variable.nombre}"/>
+                </p:column>
+
+                <p:column  filterBy="#{variable.unidadresponsable.nombre}" filterMatchMode="contains" filterStyle="width: 100%;">
+                    <f:facet name="header">
+                        <h:outputText value="Unidad"/>
+                    </f:facet>
+                    <h:outputText value="#{variable.unidadresponsable.nombre}"/>
+                </p:column>
+
+                <p:column filterBy="#{variable.estatus}" filterMatchMode="equals" style="width:300px;">
+                    <f:facet name="header">
+                        <h:outputText value="Unidad"/>
+                    </f:facet>
+                    <f:facet name="filter">
+                        <p:selectOneButton onchange="PF('variablesTable').filter()">
+                            <f:converter converterId="javax.faces.Integer" />
+                            <f:selectItem itemLabel="Todos" itemValue="" />
+                            <f:selectItem itemLabel="No vigentes" itemValue="0" />
+                            <f:selectItem itemLabel="Vigentes" itemValue="1" />
+                        </p:selectOneButton>
+                    </f:facet>
+                    <h:outputLabel value="#{variable.estatus==0? 'No vigente' : 'Vigente' }"/>
+                </p:column>
+
+                <f:facet name="footer">
+                    <div class="row">
+                        <div class="col-lg-4 ">
+                            <div class="pull-left">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{variableController.prepareCreate()}" update=":VariablesCreateForm" oncomplete="PF('createVarWi').show();" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{msg.view}" update=":VariableViewForm" oncomplete="PF('viewVarWi').show();" disabled="#{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{msg.edit}" update=":VariableEditForm" oncomplete="PF('editVarWi').show();" disabled="#{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+                                <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{variableController.deleteItem()}" update="growl,varDataList" 
+                                                 disabled="#{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();">
+                                    <p:confirm header="Información General" message="Desea eliminar este registro? " icon="fa fa-warning"/>
+                                </p:commandButton>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-6 col-lg-2">
+                            <div class="pull-right">
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="excel.png" width="24"/>
+                                    <p:dataExporter type="xls" target="varDataList" fileName="SIIPG-Variables" />
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="pdf_1.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="varDataList" fileName="SIIPG-Variables"/>
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="xml.png" width="24"/>
+                                    <p:dataExporter type="xml" target="varDataList" fileName="SIIPG-Variables" />
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+            </p:dataTable>
+
+        </h:form>
+
+        <ui:include src="/confirmation.xhtml"/>
+        <ui:include src="View.xhtml" />       
+        <ui:include src="Edit.xhtml" />       
+        <ui:include src="Create.xhtml" />       
+
+    </h:body>
+</html>
+

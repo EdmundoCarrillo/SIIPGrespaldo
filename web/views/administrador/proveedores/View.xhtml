@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition>
+
+        <p:dialog id="viewUnidadDlg" widgetVar="viewUnidadWi" modal="true" 
+                  resizable="false" 
+                  showEffect="explode"
+                  hideEffect="explode"
+                  header="Nueva variable">
+            <h:form id="UnidadViewForm">
+
+                <h:panelGroup>
+                    <p:panelGrid columns="2">
+
+                        <h:outputText value="Nombre" style=" color: #0033ff;" />
+                        <h:outputText  value="#{unidadController.current.nombre}" />
+
+                        <h:outputText value="Dirección" style=" color: #0033ff;" />
+                        <h:outputText  value="#{unidadController.current.direccion}" />
+
+                        <h:outputText value="Área Politécnica" style=" color: #0033ff;" />
+                        <h:outputText  value="#{unidadController.current.areapolitecnica.nombre}"/>
+
+                        <h:outputText value="Entidad Federativa" style=" color: #0033ff;" />
+                        <h:outputText  value="#{unidadController.current.entidadfederativa.nombre}"/>
+
+                        <h:outputText value="Estatus:" style="color: #0033ff;" />
+                        <h:outputText value="#{unidadController.current.estatus==0? 'No vigente' : 'Vigente'}"/>
+
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton value="Salir" type="button" onclick="PF('viewUnidadWi').hide();" /> 
+                </h:panelGroup>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>  
+</html>

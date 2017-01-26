@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        
+        <p:dialog id="createUserDlg" widgetVar="createUserWI" modal="true"  
+                      closeOnEscape="true"
+                      resizable="false" 
+                      showEffect="explode"
+                      hideEffect="explode"
+                      header="Crear un nuevo usuario">
+            <h:form id="createFormUser">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Nombre:" style=" color: #0033ff; " />
+                        <p:inputText value="#{userController.selected.nombre}" required="true" size="50" />                                    
+
+                        <p:outputLabel value="Apellido Paterno:"   style="color: #0033ff;" />
+                        <p:inputText value="#{userController.selected.apellidoPaterno}" required="true" size="50"  /> 
+
+                        <p:outputLabel value="Apellido Materno:"  style=" color: #0033ff;" />
+                        <p:inputText value="#{userController.selected.apellidoMaterno}" required="true" size="50" />
+
+                        <p:outputLabel value="RFC/Homoclave: "  style=" color: #0033ff;" />
+                        <h:panelGroup id="prfc">
+                            <p:inputText value="#{userController.selected.id.rfc}" required="true" size="30">
+                                <p:ajax event="blur"  listener="#{userController.verifyRfc()}" update="validarfc, createprocess"  />
+                            </p:inputText>
+                            <p:outputLabel id="validarfc" value="#{userController.rfcmsg}"  />
+                        </h:panelGroup>
+                        <p:outputLabel value="Email:"  style="color: #0033ff;" />
+                        <p:inputText value="#{userController.selected.email}" required="true" size="50" />
+
+                        <p:outputLabel value="Telefonos:"  style=" color: #0033ff;" />
+                        <p:inputTextarea  value="#{userController.selected.telefonos}" required="true"   />             
+
+                        <p:outputLabel value="No. Empleado:*"  style=" color: #0033ff;" />
+                        <p:inputText value="#{userController.selected.numeroEmpleado}" required="true" size="50"  />
+
+
+                        <p:outputLabel value="Rol:"  style=" color:#0033ff;"  />
+                        <p:selectOneMenu  value="#{userController.selectedRol}"  style="width: 150px;" >
+                            
+                            <f:selectItems  value="#{userController.listr}"   
+                                           var="rol" itemLabel="#{rol.rol}" itemValue="#{rol.id}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Estatus:"  style=" color: #0033ff;" />
+                        <p:selectOneRadio value="#{userController.selected.status}" >
+                            <f:selectItem itemLabel="Vigente   " itemValue="1" />
+                            <f:selectItem itemLabel="No vigente" itemValue="0" />
+                        </p:selectOneRadio>
+
+
+                        <p:outputLabel value="Area"  style=" color: #0033ff;" />
+                        <p:selectOneMenu value="#{userController.selectedArea}"  style="width: 200px">
+                            <f:selectItems value="#{userController.listArea}" var="area" itemLabel="#{area.nombre}" itemValue="#{area.id}" />
+                            <p:ajax listener="#{userController.updateunidades()}" event="change" update="unidadr2"  />
+                        </p:selectOneMenu> 
+           
+                        <p:outputLabel value="Password" style="color: #0033ff" />
+                        <p:password value="#{userController.selected.password}" id="createp" required="true" requiredMessage="Ingrese una contraseña" match="createp2" validatorMessage="Las contraseña debe conincidir" feedback="true" />
+                        
+                        <p:outputLabel value="Confirmar Password" style="color: #0033ff" />
+                        <p:password value="confir" id="createp2" required="true" requiredMessage="Confirme contraseña" />
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="2">
+                        
+                             
+                        
+                        <p:outputLabel value="Unidad Responsable:"  style="color: #0033ff;" />
+                        <p:selectOneMenu id="unidadr2" filter="true"  value="#{userController.selectedUnidad}"  >
+                            <f:selectItems value="#{userController.listu}" var="unidad" itemLabel="#{unidad.nombre}" itemValue="#{unidad.id}"/>
+                        </p:selectOneMenu>
+
+                    </p:panelGrid>
+                     <br/>
+                     
+ 
+                     <p:commandButton id="createprocess"  value="Crear Usuario" actionListener="#{userController.createItem()}" update="growl" disabled="#{userController.enableCreate}" />
+                   
+                    <p:commandButton value="Cancelar" type="button" onclick="PF('createUserWI').hide();" />
+                    
+                </h:panelGroup>
+                
+            </h:form>        
+        </p:dialog>
+        
+    </ui:composition>
+</html>

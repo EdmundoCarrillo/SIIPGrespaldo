@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link href="resources/css/siipg.css" rel="stylesheet" type="text/css"/>
+        <title>SIIPG</title>
+    </h:head>
+
+    <style>
+        .ui-growl {   
+            position:fixed;
+            top: 12%;
+        }
+    </style>
+
+    <h:body style="background-color:whitesmoke;">
+
+        <h:form id="UnidadListForm">
+            <p:dataTable id="unidadDataList" value="#{unidadController.items}" var="unidad" widgetVar="unidadTable"
+                         style="text-align: left; border-collapse: collapse; margin-bottom: 20px;"
+                         paginator="true" rows="15"  
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="15,20,25,30" 
+                         currentPageReportTemplate="({currentPage} de {totalPages})" 
+                         paginatorPosition="bottom"
+                         selectionMode="single" 
+                         selection="#{unidadController.current}"
+                         rowKey="#{unidad.id}">
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column filterBy="#{unidad.nombre}" filterMatchMode="contains" filterStyle="width: 100%;">
+                    <f:facet name="header">
+                        <h:outputText value="Proveedor"/>
+                    </f:facet>
+                    <h:outputText value="#{unidad.nombre}"/>
+                </p:column>
+
+                <p:column filterBy="#{unidad.estatus}" filterMatchMode="equals" style="width:300px;">
+                    <f:facet name="header">
+                        <h:outputText value="Estatus"/>
+                    </f:facet>
+                    <f:facet name="filter">
+                        <p:selectOneButton onchange="PF('unidadTable').filter()">
+                            <f:converter converterId="javax.faces.Integer" />
+                            <f:selectItem itemLabel="Todos" itemValue="" />
+                            <f:selectItem itemLabel="No vigentes" itemValue="0" />
+                            <f:selectItem itemLabel="Vigentes" itemValue="1" />
+                        </p:selectOneButton>
+                    </f:facet>
+                    <h:outputLabel value="#{unidad.estatus==0? 'No vigente' : 'Vigente'}"/>
+                </p:column>
+
+                <f:facet name="footer">
+                    <div class="row">
+                        <div class="col-lg-4 ">
+                            <div class="pull-left">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{unidadController.prepareCreate()}" update=":UnidadCreateForm" oncomplete="PF('createUnidadWi').show();" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{msg.view}" update=":UnidadViewForm" oncomplete="PF('viewUnidadWi').show();" disabled="#{empty unidadController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{msg.edit}" update=":UnidadEditForm" oncomplete="PF('editUnidadWi').show();" disabled="#{empty unidadController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+                                <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{unidadController.deleteItem()}" update="growl,unidadDataList" 
+                                                 disabled="#{empty unidadController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();">
+                                    <p:confirm header="Información General" message="Desea eliminar este registro? " icon="fa fa-warning"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-6 col-lg-2">
+                            <div class="pull-right">
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="excel.png" width="24"/>
+                                    <p:dataExporter type="xls" target="unidadDataList" fileName="SIIPG-Proveedores" />
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="pdf_1.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="unidadDataList" fileName="SIIPG-Proveedores"/>
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="xml.png" width="24"/>
+                                    <p:dataExporter type="xml" target="unidadDataList" fileName="SIIPG-Proveedores" />
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+
+            </p:dataTable>
+
+        </h:form>
+        <ui:include src="/confirmation.xhtml"/>
+        <ui:include src="Create.xhtml" />       
+        <ui:include src="View.xhtml" />       
+        <ui:include src="Edit.xhtml" />       
+
+    </h:body>
+</html>
+
