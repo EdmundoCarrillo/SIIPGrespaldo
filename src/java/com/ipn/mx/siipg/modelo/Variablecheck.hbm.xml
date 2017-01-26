@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 12/12/2016 01:27:18 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.ipn.mx.siipg.modelo.Variablecheck" table="variablecheck" catalog="entidadgenerov1" optimistic-lock="version">
+    <class name="com.ipn.mx.siipg.modelo.Variablecheck" table="variablecheck"  optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />

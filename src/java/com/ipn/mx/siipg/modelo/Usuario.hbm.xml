@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 12/12/2016 01:27:18 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.ipn.mx.siipg.modelo.Usuario" table="usuario" catalog="entidadgenerov1" optimistic-lock="version">
+    <class name="com.ipn.mx.siipg.modelo.Usuario" table="usuario"  optimistic-lock="version">
         <composite-id name="id" class="com.ipn.mx.siipg.modelo.UsuarioId">
             <key-property name="id" type="int">
                 <column name="id" />

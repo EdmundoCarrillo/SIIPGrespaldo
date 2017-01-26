@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.ipn.mx.siipg.modelo.Indicador" table="indicador" catalog="entidadgenerov1" optimistic-lock="version">
+    <class name="com.ipn.mx.siipg.modelo.Indicador" table="indicador" optimistic-lock="version">
         
         <id name="id" type="java.lang.Integer">
             <column name="id" />
