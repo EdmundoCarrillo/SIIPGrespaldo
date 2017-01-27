@@ -10,11 +10,9 @@ import com.ipn.mx.siipg.impl.MenuDaoImpl;
 import com.ipn.mx.siipg.modelo.Menu;
 import com.ipn.mx.siipg.modelo.Usuario;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 @Named
@@ -62,7 +60,5 @@ public class MenuController implements Serializable {
         setPageLink(pageLink);
         setPageName(menuName);
 
-        System.out.println(menuName);
-        System.out.println(pageLink);
     }
 }

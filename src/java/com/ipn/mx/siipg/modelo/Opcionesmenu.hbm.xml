@@ -17,5 +17,8 @@
         <property name="ruta" type="string">
             <column name="ruta" length="100" not-null="true" />
         </property>
+        <property name="icon" type="string">
+            <column name="icon" length="45"/>
+        </property>
     </class>
 </hibernate-mapping>

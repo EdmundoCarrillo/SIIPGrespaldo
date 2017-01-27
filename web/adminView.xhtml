@@ -32,7 +32,7 @@
         <div class="wrapper">
             <header class="main-header">
                 <a href="#" class="logo">
-                    <span class="logo-mini"><b>I</b>PN</span>
+                    <span class="logo-mini" style="font-weight: bold;"><b>I</b>PN</span>
                     <span class="logo-lg"><b>SIIPG</b></span>
                 </a>
 
@@ -135,22 +135,35 @@
                         <div class="user-panel"></div>
                         <!-- /.sidebar-menu -->
                         <ul class="sidebar-menu" id="sidebar-menu" style="height: 80%;width: 100%">
-                            <li class="header" id="liHeader">Navegación Principal</li>
+                            <li class="header" id="liHeader"><center>Navegación Principal</center></li>
                             <h:panelGroup id="menuListGroup" class="sidebar-menu">
                                 <ui:repeat value="#{menuController.menuList}" var="menu">
                                     <ui:fragment>
-                                        <li>
-                                            <p:commandLink action="#{menuController.setCustomPage(menu.nombre,menu.ruta)}" update="pageContent">
-                                                <i class="#{menu.icon}"></i> 
-                                                <span>#{menu.nombre}</span>
-                                            </p:commandLink>
-
+                                        <li class="treeview">
+                                            <ui:fragment>
+                                                <a href="">
+                                                    <i class="#{menu.icon}" ></i> 
+                                                    <span>#{menu.nombre}</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                            </ui:fragment>
+                                            <ul class="treeview-menu">
+                                                <ui:repeat value="#{subMenuController.items}" var="subMenu">
+                                                    <ui:fragment rendered="#{menu.idmenu == subMenu.menu.idmenu}">
+                                                        <li style="color:white; padding-left:10px;">
+                                                            <p:commandLink action="#{menuController.setCustomPage(subMenu.nombre,subMenu.ruta)}" update="pageContent">
+                                                                <i class="#{subMenu.icon}" style="color:wheat;"></i>
+                                                                &nbsp;&nbsp;#{subMenu.nombre}
+                                                            </p:commandLink>
+                                                        </li>
+                                                    </ui:fragment>
+                                                </ui:repeat>
+                                            </ul>
                                         </li>
                                     </ui:fragment>
                                 </ui:repeat>
                             </h:panelGroup>
                         </ul>
-
                     </section>
                     <!-- /.sidebar -->
                 </aside>
@@ -177,6 +190,8 @@
                     </h:panelGroup>
 
                 </section>
+
+
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
@@ -186,7 +201,38 @@
         <script src="resources/js/jquery-2.2.3.min.js" type="text/javascript"></script>
         <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="resources/js/app.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
 
+            function start() {
+                var cssClass = $("body").attr("class");
+                NProgress.start(cssClass);
+            }
+
+            function finish() {
+                NProgress.done();
+            }
+
+        </script>
+
+        <!-- Page Loading Effect -->
+        <script>var HN = [];
+            HN.factory = function (e) {
+                return function () {
+                    HN.push([e].concat(Array.prototype.slice.call(arguments, 0)))
+                };
+            }, HN.on = HN.factory("on"), HN.once = HN.factory("once"), HN.off = HN.factory("off"), HN.emit = HN.factory("emit"), HN.load = function () {
+                var e = "hn-button.js";
+                if (document.getElementById(e))
+                    return;
+                var t = document.createElement("script");
+                t.id = e, t.src = "//hn-button.herokuapp.com/hn-button.js";
+                var n = document.getElementsByTagName("script")[0];
+                n.parentNode.insertBefore(t, n)
+            }, HN.load();
+
+
+
+        </script>
     </h:body>
 </html>
 
