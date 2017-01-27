@@ -91,6 +91,10 @@ public class VariableController implements Serializable {
 
     }
 
+    public void fixSelectOneMenu() {
+        selectedUnidad = current.getUnidadresponsable().getId().toString();
+    }
+
     public void printError(Exception ex) {
         JsfUtil.addErrorMessage(ResourceBundle.getBundle("Bundle").getString("system.error"));
         System.out.println(ex.toString());

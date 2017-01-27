@@ -115,6 +115,11 @@ public class UnidadController implements Serializable {
         return unidadDao.loadUnidad();
     }
 
+    public void fixSelectOneMenu() {
+        selectedEstado = current.getEntidadfederativa().getId().toString();
+        selectedArea = current.getAreapolitecnica().getId().toString();
+    }
+
     public void printError(Exception ex) {
         JsfUtil.addErrorMessage(ResourceBundle.getBundle("Bundle").getString("system.error"));
         System.out.println(ex.toString());
