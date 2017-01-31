@@ -1,12 +1,131 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        
+        <link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link href="resources/css/siipg.css" rel="stylesheet" type="text/css"/>
+        <title>Administracion de graficas</title>               
+                
     </h:head>
+     <style>
+        .ui-growl {   
+            position:fixed;
+            top: 12%;
+        }
+
+    </style>
     <h:body>
-        Aqui va tu codigo!;
+        <div class="col-lg-12 hidden-sm hidden-xs" style="background-color: #3c8dbc">
+            <div class="col-lg-12"  style="height: 30px">
+                <center><p id="UPTitulo2">Administración de gráficas  </p> </center>
+            </div>   
+        </div>
+        
+        <div class="container hidden-sm hidden-xs"  >
+        <h:form id="AdminGraphics" >
+            
+            <div class="row"  >
+                <div class="col-lg-2"  ></div>  
+                <div class="col-lg-10" style="padding: 20px" >
+                <h:panelGrid columns="2"  >
+                    <p class="text-bold" style="padding-right: 10px ">Indicador</p>
+                    <p:selectOneMenu value="#{administrarGraficaController.selectIndicador}" >
+                        <f:selectItems value="#{administrarGraficaController.indicadores}"
+                                       var="indicador" itemLabel="#{indicador.nombre}" itemValue="#{indicador.id}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                </div>
+            
+            </div>
+            
+            <div class="row" style="padding-top: 20px" >
+                <div class="col-lg-3"/>
+                <div class="col-lg-1" >
+                    <p class="text-black text-bold " >Fórmula</p>
+                </div>
+                <div class="col-lg-2">                    
+                    <p class="text-bold" >Variables</p>
+                </div>
+            </div>
+                
+            <div class="row" >
+                <div class="col-lg-2"/>
+                <div class="col-md-1" style="padding-top: 26px"  >
+                    <div class="col-xs-1" >
+                        <p style="padding-left: 5px">100 </p>
+                    </div>
+                    <div class="col-xs-1"  >
+                        <p style="padding-left: 20px">X</p>                        
+                    </div>                    
+                </div>
+                    
+                <div class="col-lg-1" >
+                    <h:panelGrid columns="1" >
+                    <p:outputLabel value="valor1" style="padding-left: 10px" />
+                    <p:graphicImage library="images" name="linea.png"  width="75" />
+                    <p:outputLabel value="valor2" style="padding-left: 10px;padding-top: 5px" />                        
+                    </h:panelGrid>                    
+                </div>
+                <div class="col-md-4">
+                    <p:selectOneMenu value="#{administrarGraficaController.selectVarible}" >
+                        <f:selectItems  value="#{variableController.items}" var="variable"
+                                        itemLabel="#{variable.nombre}" itemValue="#{variable.id}"/>
+                    </p:selectOneMenu>
+                    <p ></p>
+                    <p:selectOneMenu value="#{administrarGraficaController.selectVarible2}"  >
+                        <f:selectItems value="#{variableController.items}" var="variable2" itemLabel="#{variable2.nombre}" itemValue="#{variable2.id}" />
+                    </p:selectOneMenu>
+                </div>                
+            </div>
+                    
+            <div id="grafica" class="row" style="padding-top: 30px" >
+                <div class="col-lg-3" />
+                <div class="col-lg-3" >
+                    <p>Selecciona gráfica</p>
+                    <p:selectOneMenu  value="#{administrarGraficaController.selectGraphic}"   >
+                        <f:selectItem itemLabel="grafico de columnas" itemValue="0" />
+                        <f:selectItem itemLabel="grafico de areas" itemValue="1" />
+                        <f:selectItem itemLabel="grafico de linea" itemValue="2" />
+                        <f:selectItem itemLabel="grafico de circulo" itemValue="3" />
+                        <p:ajax listener="#{administrarGraficaController.refreshImage()}"  event="change" update="grafico"  />
+                    </p:selectOneMenu>
+                </div>
+                
+                <div  class="col-lg-4" >
+                    <p:fragment id="grafico" autoUpdate="true" >
+                           
+                     <img id="graficasimg" src="resources/images/#{administrarGraficaController.image}"  height="230" /> 
+                     </p:fragment>
+                </div>
+            </div>
+                
+            
+                <div class="row" >
+                    <div class="col-lg-8" />
+                    
+                    <div >
+                        <p:commandButton id="acept" value="  Aceptar  " />
+                    </div>
+               
+                
+                
+                </div>
+                        
+            
+            
+           
+            
+           
+            
+            
+        </h:form>    
+        </div>
+        
+        
     </h:body>
 </html>
-
