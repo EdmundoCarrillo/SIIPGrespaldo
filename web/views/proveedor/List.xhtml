@@ -46,34 +46,26 @@
                     <h:outputText value="#{variable.nombre}"/>
                 </p:column>
 
-                <p:column style="width: 120px;">
-                    <f:facet name="header">
-                        <h:outputText value="Valor"/>
-                    </f:facet>
-                    <h:outputText value="1000"/>
+                <p:column style="width: 120px;" headerText="Valor">
+
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="1000" /></f:facet>
+                        <f:facet name="input"><p:inputText id="modelInput" style="width:100%" /></f:facet>
+                    </p:cellEditor>
+
                 </p:column>
 
-                <p:column style="width: 120px;">
-                    <f:facet name="header">
-                        <h:outputText value="Estatus"/>
-                    </f:facet>
-                    <p:selectBooleanButton id="value1" onLabel="Vigente" offLabel="No vigente" style="width:100px" />
-                </p:column>
 
                 <p:column style="width: 120px; color: red;">
                     <f:facet name="header">
                         <h:outputText value="Valido"/>
                     </f:facet>
-                    <p:selectBooleanButton id="value2" onLabel="Valido" offLabel="No valido" style="width:100px" />
+                    <h:outputText value="No valido "/>
                 </p:column>
 
                 <p:column headerText="Observación" style="width: 350px; color: red;">
 
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="El total de la matrícula no es correcto favor de revisar y corregir." /></f:facet>
-                        <f:facet name="input"><p:inputText id="modelInput" style="width:100%" /></f:facet>
-                    </p:cellEditor>
-                   
+                    <h:outputText value="El total de la matrícula no es correcto favor de revisar y corregir"/>
                 </p:column>
 
 

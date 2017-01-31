@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition>
+
+        <p:dialog id="createIndicadorDlg" widgetVar="createIndicadorWi" modal="true" 
+                  resizable="false" 
+                  showEffect="explode"
+                  hideEffect="explode"
+                  header="Nuevo indicador">
+            <h:form id="IndicadorCreateForm">
+
+                <h:panelGroup>
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="Nombre" />
+                        <p:inputText  value="#{indicadorController.current.nombre}"  required="true" style="width: 600px;" />
+
+                        <h:outputText value="Eje Temático:" />
+                        <p:selectOneMenu value="#{indicadorController.selectedEje}">
+                            <f:selectItems value="#{ejeTematicoController.itemsAvailableSelectOne}" var="eje" itemLabel="#{eje.nombre}" itemValue="#{eje.id}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Descripción" />
+                        
+                        
+                            <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                           sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        
+                        
+
+
+
+                        <h:outputLabel value="Estatus:" />
+                        <p:selectOneRadio value="#{indicadorController.current.estatus}">
+                            <f:selectItem itemLabel="Vigente" itemValue="1" />
+                            <f:selectItem itemLabel="No vigente" itemValue="0" />
+                        </p:selectOneRadio>
+
+                    </p:panelGrid>
+                    <br/>
+
+                </h:panelGroup>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>  
+</html>

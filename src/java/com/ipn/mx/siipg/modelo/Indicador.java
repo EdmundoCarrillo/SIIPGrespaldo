@@ -7,6 +7,7 @@ public class Indicador implements java.io.Serializable {
     private String nombre;
     private String rutaPdf;
     private Float resultado;
+    private int estatus;
 
     public Indicador() {
     }
@@ -49,6 +50,14 @@ public class Indicador implements java.io.Serializable {
 
     public void setResultado(Float resultado) {
         this.resultado = resultado;
+    }
+
+    public int getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(int estatus) {
+        this.estatus = estatus;
     }
 
 }

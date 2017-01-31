@@ -1,15 +1,43 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-        <h3>PDF</h3><object type="application/pdf" data="../../../resources/catalogoIndicadores/ok.pdf?pfdrid_c=true" height="300px" width="500px" internalinstanceid="7">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-        </object>
-    </h:body>
+    <ui:composition>
+
+        <p:dialog id="editEjeDlg" widgetVar="editEjeWi" modal="true" 
+                  resizable="false" 
+                  showEffect="explode"
+                  hideEffect="explode"
+                  header="Editar eje tematico">
+            <h:form id="EjetematicoEditForm">
+
+                <h:panelGroup>
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="Nombre" />
+                        <p:inputText  value="#{ejeTematicoController.current.nombre}"  required="true" style="width: 600px;" />
+
+                        <p:outputLabel value="Descripción" />
+                        <p:inputTextarea  value="#{ejeTematicoController.current.descripcion}" style="width: 600px;"  />
+
+                        <h:outputLabel value="Estatus:" />
+                        <p:selectOneRadio value="#{ejeTematicoController.current.estatus}">
+                            <f:selectItem itemLabel="Vigente" itemValue="1" />
+                            <f:selectItem itemLabel="No vigente" itemValue="0" />
+                        </p:selectOneRadio>
+
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton value="Actualizar" actionListener="#{ejeTematicoController.updateItem()}"  update=":EjetematicoListForm:dataList,growl" oncomplete="PF('editEjeWi').hide();"/>
+                    <p:commandButton value="Cancelar" type="button" onclick="PF('editEjeWi').hide();" /> 
+                </h:panelGroup>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>  
 </html>
-

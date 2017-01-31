@@ -20,46 +20,91 @@
     </style>
 
     <h:body style="background-color:whitesmoke;">
-
         <h:form id="IndicadorListForm">
-            <p:dataTable id="dataList" var="ejeHasIndicador" value="#{indicadorController.indicadorView}" widgetVar="indicadoresTable"
+            <h:panelGroup>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Eje Temático:" />
+                    <p:selectOneMenu value="#{indicadorController.selectedEje}">
+
+                        <f:selectItem itemLabel="Todos" itemValue="-1"/>
+                        <f:selectItems value="#{ejeTematicoController.itemsAvailableSelectOne}" var="eje"
+                                       itemLabel="#{eje.nombre}" itemValue="#{eje.id}"/>
+
+                        <p:ajax listener="#{indicadorController.updateItems()}" event="change" update="dataList" />
+                    </p:selectOneMenu>
+                </p:panelGrid>                        
+            </h:panelGroup>
+
+            <p:dataTable id="dataList" value="#{indicadorController.items}" var="indicador" widgetVar="indicadorTable"
                          style="text-align: left; border-collapse: collapse; margin-bottom: 20px;"
-                         reflow="true" paginator="true" rows="5"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
-                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         paginator="true" rows="15"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="15,20,25,30" 
                          currentPageReportTemplate="({currentPage} de {totalPages})" 
                          paginatorPosition="bottom"
-                         emptyMessage="No se encontraron coincidencias para la descripción dada." >
+                         selectionMode="single"
+                         selection="#{indicadorController.current}"
+                         rowKey="#{indicador.id}"
+                         emptyMessage="No se encontraron coincidencias para la descripción dada.">
 
-         
-                <p:subTable  var="indicador" value="#{ejeHasIndicador.indocadoresList}"  >
-                    <f:facet name="header" >
-                        <h:outputText value="#{ejeHasIndicador.nombreEje}" />
+
+                <p:column filterBy="#{indicador.nombre}" filterMatchMode="contains" filterStyle="width: 100%;" >
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"/>
                     </f:facet>
+                    <h:outputText value="#{indicador.nombre}"/>
+                </p:column>
 
-                    <p:column filterable="true" filterMatchMode="contains">
-                        <h:outputText value="#{indicador.nombre}" />
-                    </p:column>
+                <p:column filterBy="#{indicaor.estatus}" filterMatchMode="equals" style="width:300px;">
+                    <f:facet name="header">
+                        <h:outputText value="Estatus"/>
+                    </f:facet>
+                    <f:facet name="filter">
+                        <p:selectOneButton onchange="PF('indicadorTable').filter()">
+                            <f:converter converterId="javax.faces.Integer" />
+                            <f:selectItem itemLabel="Todos" itemValue="" />
+                            <f:selectItem itemLabel="No vigentes" itemValue="0" />
+                            <f:selectItem itemLabel="Vigentes" itemValue="1" />
+                        </p:selectOneButton>
+                    </f:facet>
+                    <h:outputLabel value="#{indicador.estatus==0? 'No vigente' : 'Vigente'}"/>
+                </p:column>
+                ertyguijokpl
+                <f:facet name="footer">
+                    <div class="row">
+                        <div class="col-lg-4 ">
+                            <div class="pull-left">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{ejeTematicoController.prepareCreate()}" oncomplete="PF('createIndicadorWi').show();" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
 
-                    <p:column style="width:32px;text-align: center">
-                        <p:commandButton  icon="ui-icon-pencil" oncomplete="PF('viewIndicador').show();"
-                                          onstart="PF('loading').show();" onsuccess="PF('loading').hide();">
-                            <f:setPropertyActionListener value="#{indicador}" target="#{indicadorController.current}" />
-                        </p:commandButton>
 
-                        <p:button href="#{indicador.rutaPdf}" icon="ui-icon-search" target="_blank" />
-                    </p:column>
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-6 col-lg-2">
+                            <div class="pull-right">
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="excel.png" width="24"/>
+                                    <p:dataExporter type="xls" target="dataList" fileName="SIIPG-Indicadores" />
+                                </h:commandLink>
 
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="pdf_1.png" width="24" />
+                                    <p:dataExporter type="pdf" target="dataList" fileName="SIIPG-Indicadores"/>
+                                </h:commandLink>
 
-                </p:subTable>
-
-
+                                <h:commandLink>
+                                    <p:graphicImage library="images" name="xml.png" width="24"/>
+                                    <p:dataExporter type="xml" target="dataList" fileName="SIIPG-EjesIndicadores" />
+                                </h:commandLink>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </f:facet>
             </p:dataTable>
-
         </h:form>
 
         <ui:include src="/confirmation.xhtml"/>
-
+        <ui:include src="Create.xhtml" /> 
 
     </h:body>
 </html>

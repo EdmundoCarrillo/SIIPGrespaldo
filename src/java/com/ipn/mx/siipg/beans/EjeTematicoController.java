@@ -73,6 +73,11 @@ public class EjeTematicoController implements Serializable {
         }
     }
 
+    public List<Ejetematico> getItemsAvailableSelectOne() {
+        EjeTematicoDao ejeTematicoDao = new EjeTematicoDaoImpl();
+        return ejeTematicoDao.loadEjes();
+    }
+
     public void printError(Exception ex) {
         JsfUtil.addErrorMessage(ResourceBundle.getBundle("Bundle").getString("system.error"));
         System.out.println(ex.toString());

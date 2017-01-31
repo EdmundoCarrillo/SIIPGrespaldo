@@ -25,6 +25,10 @@
         <property name="resultado" type="java.lang.Float">
             <column name="resultado" precision="12" scale="0" />
         </property>
+        
+        <property name="estatus" type="int">
+            <column name="estatus" not-null="true" />
+        </property>
      
     </class>
 </hibernate-mapping>

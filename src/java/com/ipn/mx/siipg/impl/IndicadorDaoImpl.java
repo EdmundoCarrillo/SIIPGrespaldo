@@ -14,6 +14,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class IndicadorDaoImpl implements IndicadorDao {
 
@@ -29,6 +30,26 @@ public class IndicadorDaoImpl implements IndicadorDao {
             System.out.println(e);
         }
         return indicadorView;
+    }
+
+    @Override
+    public List<Indicador> loadIndicadoresList() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        List indicadoresList = null;
+        try {
+            tx.begin();
+            indicadoresList = session.createQuery("from Indicador").list();
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
+        return indicadoresList;
     }
 
     @Override
@@ -64,15 +85,12 @@ public class IndicadorDaoImpl implements IndicadorDao {
         }
         return ejesList;
     }
-
+//
 //    public static void main(String[] args) {
 //        IndicadorDao indicadorDao = new IndicadorDaoImpl();
-//        List<EjeHasIndicadorView> indicadorView = indicadorDao.loadIndicadores();
-//        for (EjeHasIndicadorView iView : indicadorView) {
-//            System.out.println(iView.getNombreEje());
-//            System.out.println(iView.getIndocadoresList().get(0).getNombre());
-//            System.out.println("-----------------------");
-//
-////        }
+//        List<Indicador> indicadoresList = indicadorDao.loadIndicadoresList();
+//        for (Indicador indicador : indicadoresList) {
+//            System.out.println(indicador.getNombre());
+//        }
 //    }
 }

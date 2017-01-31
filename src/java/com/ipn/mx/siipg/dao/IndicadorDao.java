@@ -16,7 +16,11 @@ import java.util.List;
  */
 public interface IndicadorDao {
 
+    /*loadIndicadores tiene una implementación diferente ya que al principio 
+     se uso una subTable para mostrar los indicadores por eje.*/
     public List<EjeHasIndicadorView> loadIndicadores();
+
+    public List<Indicador> loadIndicadoresList();
 
     public void newIndicador(Indicador indicador);
 

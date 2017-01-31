@@ -1,18 +1,12 @@
-/*
- * This code was developed by Edmundo Carrillo on java technologies.
- * Contact: edmundodev@gmail.com
- * Hope you'll find it useful.
- */
+
 package com.ipn.mx.siipg.beans;
 
 import com.ipn.mx.siipg.dao.AreaPolitecnicaDao;
 import com.ipn.mx.siipg.dao.RolDao;
-import com.ipn.mx.siipg.dao.UnidadResponsableDao;
 import com.ipn.mx.siipg.dao.UsuarioDao;
 import com.ipn.mx.siipg.dao.util.JsfUtil;
 import com.ipn.mx.siipg.impl.AreaPolitecnicaDaoImpl;
 import com.ipn.mx.siipg.impl.RolDaoImpl;
-import com.ipn.mx.siipg.impl.UnidadResponsableDaoImpl;
 import com.ipn.mx.siipg.impl.UsuarioDaoImpl;
 import com.ipn.mx.siipg.modelo.Areapolitecnica;
 import com.ipn.mx.siipg.modelo.Rol;
@@ -26,10 +20,7 @@ import java.util.ResourceBundle;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
 
 @Named
