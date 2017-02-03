@@ -13,7 +13,7 @@
                   showEffect="explode"
                   hideEffect="explode"
                   header="Nuevo indicador">
-            <h:form id="IndicadorCreateForm">
+            <h:form id="IndicadorCreateForm" enctype="multipart/form-data">
 
                 <h:panelGroup>
                     <p:panelGrid columns="2">
@@ -27,13 +27,10 @@
                         </p:selectOneMenu>
 
                         <h:outputText value="Descripción" />
-                        
-                        
-                            <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                                           sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                        
-                        
 
+
+                        <p:fileUpload value="#{indicadorController.file}" mode="advanced"
+                                      fileUploadListener="#{indicadorController.fileUploadListener}" />
 
 
                         <h:outputLabel value="Estatus:" />

@@ -18,8 +18,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 @Named
 @SessionScoped
@@ -28,14 +28,16 @@ public class IndicadorController implements Serializable {
     private Indicador current;
     private List<Indicador> items;
     private String selectedEje;
+
+    //Subida de archivos 
     private final String pdfPath = "C:\\indicadoresPDFs\\";
+    private UploadedFile file;
 
     public IndicadorController() {
 
         IndicadorDao indicadorDao = new IndicadorDaoImpl();
         this.items = indicadorDao.loadIndicadoresList();
-//        ServletContext sc = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-//        System.out.println(sc.getRealPath("/"));
+
     }
 
     public Indicador getCurrent() {
@@ -62,6 +64,14 @@ public class IndicadorController implements Serializable {
         this.selectedEje = selectedEje;
     }
 
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
     public void updateItems() {
         IndicadorDao indicadorDao = new IndicadorDaoImpl();
         if (Integer.valueOf(selectedEje) == -1) {
@@ -73,21 +83,30 @@ public class IndicadorController implements Serializable {
         }
     }
 
-    public void copyFile(String nombreDelArchivo, InputStream in) {
-//        try (
-//            OutputStream out = new FileOutputStream(new File(rutaAlmacenarImagen + "/" + nombreDelArchivo))) {
-//            int read = 0;
-//            byte[] bytes = new byte[1024];
-//
-//            while ((read = in.read(bytes)) != -1) {
-//                out.write(bytes, 0, read);
-//            }
-//            in.close();
-//            out.flush();
-//        } catch (IOException ex) {
-//            System.out.println(ex.getMessage());
-//
-//        }
+    public void fileUploadListener(FileUploadEvent event) {
+        this.file = event.getFile();
+        try {
+            copyFile(file.getFileName(), file.getInputstream());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void copyFile(String fileName, InputStream inputStream) {
+        try (
+                OutputStream out = new FileOutputStream(new File(pdfPath + fileName))) {
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = inputStream.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            inputStream.close();
+            out.flush();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+
+        }
 
     }
 
