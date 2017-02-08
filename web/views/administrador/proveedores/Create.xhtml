@@ -43,7 +43,7 @@
 
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Guardar" actionListener="#{unidadController.createItem()}"  update=":UnidadListForm:unidadDataList,growl" oncomplete="PF('createUnidadWi').hide();"/>
+                    <p:commandButton value="Guardar" actionListener="#{unidadController.createItem()}"  update=":UnidadListForm:unidadDataList,growl" oncomplete="PF('createUnidadWi').hide(),PF('unidadTable').filter();"/>
                     <p:commandButton value="Cancelar" type="button" onclick="PF('createUnidadWi').hide();" /> 
                 </h:panelGroup>
 

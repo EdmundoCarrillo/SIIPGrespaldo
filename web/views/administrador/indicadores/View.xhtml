@@ -2,26 +2,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <h:form >
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-            <p:dialog id="viewIndicadorDlg" widgetVar="viewIndicador" modal="true"  
-                      closeOnEscape="true"
-                      resizable="false" 
-                      showEffect="explode"
-                      hideEffect="explode">
+    <ui:composition>
 
-                 <h3>PDF</h3><object type="application/pdf" data="/SIIPG/resources/catalogos/indicadores/ok.pdf?pfdrid_c=true" height="300px" width="100%" internalinstanceid="7">
-            Your browser can't display pdf, <a href="/resources/demo/media/guide.pdf">click</a> to download pdf instead.
-        </object>
-                 <a href="/SIIPG/resources/catalogos/indicadores/ok.pdf">ikikikiki</a>
-            </p:dialog>
-        </h:form>
-    </h:body>
+        <p:dialog id="viewIndicadorDlg" widgetVar="viewIndicadorWi" modal="true" 
+                  resizable="false" 
+                  showEffect="explode"
+                  hideEffect="explode"
+                  header="Indicador">
+            <h:form id="IndicadorViewForm">
+
+                <h:panelGroup>
+                    <p:panelGrid columns="2">
+
+                        <h:outputText value="Nombre" style=" color: #0033ff;" />
+                        <h:outputText  value="#{indicadorController.current.nombre}" />
+
+                        <h:outputText value="Eje Tématico" style=" color: #0033ff;" />
+                        <h:outputText  value="#{indicadorController.current.ejetematico.nombre}"/>
+
+                        <h:outputText value="Estatus:" style="color: #0033ff;" />
+                        <h:outputText value="#{indicadorController.current.estatus==0? 'No vigente' : 'Vigente'}"/>
+
+                        <h:outputLabel value="Acerca del Indicador:" />
+                        <p:button href="/resources/catalogos/indicadores/#{indicadorController.current.rutaPdf}" icon="ui-icon-arrowthick-1-s"
+                                  value="Descargar Información" target="_blank" />
+
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton value="Salir" type="button" onclick="PF('viewIndicadorWi').hide();" /> 
+                </h:panelGroup>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>  
 </html>
+
 

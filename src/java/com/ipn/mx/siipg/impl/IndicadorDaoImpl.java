@@ -54,17 +54,56 @@ public class IndicadorDaoImpl implements IndicadorDao {
 
     @Override
     public void newIndicador(Indicador indicador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        try {
+            tx.begin();
+            session.save(indicador);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
     }
 
     @Override
     public void updateIndicador(Indicador indicador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        try {
+            tx.begin();
+            session.update(indicador);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
     }
 
     @Override
     public void deleteIndicador(Indicador indicador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        try {
+            tx.begin();
+            session.delete(indicador);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
     }
 
     @Override

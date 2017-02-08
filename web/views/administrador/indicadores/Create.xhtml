@@ -29,8 +29,8 @@
                         <h:outputText value="Descripción" />
 
 
-                        <p:fileUpload value="#{indicadorController.file}" mode="advanced"
-                                      fileUploadListener="#{indicadorController.fileUploadListener}" />
+                        <p:fileUpload value="#{indicadorController.file}" mode="advanced" dragDropSupport="false"
+                                      fileUploadListener="#{indicadorController.fileUploadListener}" update="growl" fileLimit="1"/>
 
 
                         <h:outputLabel value="Estatus:" />
@@ -39,8 +39,14 @@
                             <f:selectItem itemLabel="No vigente" itemValue="0" />
                         </p:selectOneRadio>
 
+                        
                     </p:panelGrid>
                     <br/>
+                    <p:commandButton id="createButtonView" value="Guardar" actionListener="#{indicadorController.createItem()}"  
+                                     update=":IndicadorListForm:indicadorDataList,growl" 
+                                     oncomplete="PF('createIndicadorWi').hide(),PF('indicadorTable').filter();" disabled="#{indicadorController.enableToCreate}"/>
+
+                    <p:commandButton value="Cancelar" type="button" onclick="PF('createIndicadorWi').hide();" /> 
 
                 </h:panelGroup>
 

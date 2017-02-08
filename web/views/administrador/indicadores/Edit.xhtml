@@ -8,32 +8,51 @@
 
     <ui:composition>
 
-        <p:dialog id="editEjeDlg" widgetVar="editEjeWi" modal="true" 
+        <p:dialog id="editIndicadorDlg" widgetVar="editIndicadorWi" modal="true" 
                   resizable="false" 
                   showEffect="explode"
                   hideEffect="explode"
-                  header="Editar eje tematico">
-            <h:form id="EjetematicoEditForm">
+                  header="Editar indicador">
+            <h:form id="IndicadorEditForm" enctype="multipart/form-data">
 
                 <h:panelGroup>
                     <p:panelGrid columns="2">
 
                         <p:outputLabel value="Nombre" />
-                        <p:inputText  value="#{ejeTematicoController.current.nombre}"  required="true" style="width: 600px;" />
+                        <p:inputText  value="#{indicadorController.current.nombre}"  required="true" style="width: 600px;" />
 
-                        <p:outputLabel value="Descripción" />
-                        <p:inputTextarea  value="#{ejeTematicoController.current.descripcion}" style="width: 600px;"  />
+                        <h:outputText value="Eje Temático:" />
+                        <p:selectOneMenu value="#{indicadorController.selectedEje}">
+                            <f:selectItems value="#{ejeTematicoController.itemsAvailableSelectOne}" var="eje" itemLabel="#{eje.nombre}" itemValue="#{eje.id}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Descripción" />
+
+
+                        <p:fileUpload value="#{indicadorController.file}" mode="advanced" dragDropSupport="false"
+                                      fileUploadListener="#{indicadorController.fileUploadListener}" update="growl" 
+                                      fileLimit="1" onstart="loadProperty()" />
+
 
                         <h:outputLabel value="Estatus:" />
-                        <p:selectOneRadio value="#{ejeTematicoController.current.estatus}">
+                        <p:selectOneRadio value="#{indicadorController.current.estatus}">
                             <f:selectItem itemLabel="Vigente" itemValue="1" />
                             <f:selectItem itemLabel="No vigente" itemValue="0" />
                         </p:selectOneRadio>
 
+                        <p:remoteCommand name="loadProperty">
+                            <f:setPropertyActionListener value="1" target="#{indicadorController.editPdfPath}"/>
+                        </p:remoteCommand>
+                        <h:outputLabel value="" />
+
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Actualizar" actionListener="#{ejeTematicoController.updateItem()}"  update=":EjetematicoListForm:dataList,growl" oncomplete="PF('editEjeWi').hide();"/>
-                    <p:commandButton value="Cancelar" type="button" onclick="PF('editEjeWi').hide();" /> 
+                    <p:commandButton value="Actualizar" actionListener="#{indicadorController.updateItem()}"  update=":IndicadorListForm:indicadorDataList,growl" 
+                                     oncomplete="PF('editIndicadorWi').hide(),PF('indicadorTable').filter();"
+                                     />
+
+                    <p:commandButton value="Cancelar" type="button" onclick="PF('editIndicadorWi').hide();" /> 
+
                 </h:panelGroup>
 
             </h:form>

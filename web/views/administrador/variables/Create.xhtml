@@ -34,7 +34,7 @@
 
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Guardar" actionListener="#{variableController.createItem()}"  update=":VariableListForm:varDataList,growl" oncomplete="PF('createVarWi').hide();"/>
+                    <p:commandButton value="Guardar" actionListener="#{variableController.createItem()}"  update=":VariableListForm:varDataList,growl" oncomplete="PF('createVarWi').hide(),PF('variablesTable').filter();"/>
                     <p:commandButton value="Cancelar" type="button" onclick="PF('createVarWi').hide();" /> 
                 </h:panelGroup>
 

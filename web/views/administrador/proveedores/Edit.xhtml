@@ -43,7 +43,7 @@
 
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Actualizar" actionListener="#{unidadController.updateItem()}"  update=":UnidadListForm:unidadDataList,growl" oncomplete="PF('editUnidadWi').hide();"/>
+                    <p:commandButton value="Actualizar" actionListener="#{unidadController.updateItem()}"  update=":UnidadListForm:unidadDataList,growl" oncomplete="PF('editUnidadWi').hide(),PF('unidadTable').filter();"/>
                     <p:commandButton value="Cancelar" type="button" onclick="PF('editUnidadWi').hide();" /> 
                 </h:panelGroup>
 

@@ -66,7 +66,7 @@
                                 <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{msg.view}" update=":UnidadViewForm" oncomplete="PF('viewUnidadWi').show();" disabled="#{empty unidadController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{unidadController.fixSelectOneMenu()}" update=":UnidadEditForm" oncomplete="PF('editUnidadWi').show();" disabled="#{empty unidadController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
                                 <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{unidadController.deleteItem()}" update="growl,unidadDataList" 
-                                                 disabled="#{empty unidadController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();">
+                                                 disabled="#{empty unidadController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide(),PF('unidadTable').filter();">
                                     <p:confirm header="Información General" message="Desea eliminar este registro? " icon="fa fa-warning"/>
                                 </p:commandButton>
                             </div>

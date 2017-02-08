@@ -21,21 +21,24 @@
 
     <h:body style="background-color:whitesmoke;">
         <h:form id="IndicadorListForm">
-            <h:panelGroup>
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Eje Temático:" />
-                    <p:selectOneMenu value="#{indicadorController.selectedEje}">
 
-                        <f:selectItem itemLabel="Todos" itemValue="-1"/>
-                        <f:selectItems value="#{ejeTematicoController.itemsAvailableSelectOne}" var="eje"
-                                       itemLabel="#{eje.nombre}" itemValue="#{eje.id}"/>
+            <!--  Corregir este filtro !!!!!!!!!!!
+          <h:panelGroup>
+              <p:panelGrid columns="2">
+                  <p:outputLabel value="Eje Temático:" />
+                  <p:selectOneMenu value="{indicadorController.selectedEje}">
 
-                        <p:ajax listener="#{indicadorController.updateItems()}" event="change" update="dataList" />
-                    </p:selectOneMenu>
-                </p:panelGrid>                        
-            </h:panelGroup>
+                      <f:selectItem itemLabel="Todos" itemValue="-1"/>
+                      <f:selectItems value="{ejeTematicoController.itemsAvailableSelectOne}" var="eje"
+                                     itemLabel="{eje.nombre}" itemValue="{eje.id}"/>
 
-            <p:dataTable id="dataList" value="#{indicadorController.items}" var="indicador" widgetVar="indicadorTable"
+                      <p:ajax listener="{indicadorController.updateItems()}" event="change" update="indicadorDataList" />
+                  </p:selectOneMenu>
+              </p:panelGrid>                        
+          </h:panelGroup>
+            -->
+
+            <p:dataTable id="indicadorDataList" value="#{indicadorController.items}" var="indicador" widgetVar="indicadorTable"
                          style="text-align: left; border-collapse: collapse; margin-bottom: 20px;"
                          paginator="true" rows="15"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -47,6 +50,8 @@
                          rowKey="#{indicador.id}"
                          emptyMessage="No se encontraron coincidencias para la descripción dada.">
 
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
                 <p:column filterBy="#{indicador.nombre}" filterMatchMode="contains" filterStyle="width: 100%;" >
                     <f:facet name="header">
@@ -55,10 +60,7 @@
                     <h:outputText value="#{indicador.nombre}"/>
                 </p:column>
 
-                <p:column filterBy="#{indicaor.estatus}" filterMatchMode="equals" style="width:300px;">
-                    <f:facet name="header">
-                        <h:outputText value="Estatus"/>
-                    </f:facet>
+                <p:column  headerText="Estatus" filterBy="#{indicador.estatus}" filterMatchMode="equals" style="width:300px;">
                     <f:facet name="filter">
                         <p:selectOneButton onchange="PF('indicadorTable').filter()">
                             <f:converter converterId="javax.faces.Integer" />
@@ -69,13 +71,23 @@
                     </f:facet>
                     <h:outputLabel value="#{indicador.estatus==0? 'No vigente' : 'Vigente'}"/>
                 </p:column>
-                ertyguijokpl
+
                 <f:facet name="footer">
                     <div class="row">
                         <div class="col-lg-4 ">
                             <div class="pull-left">
-                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{ejeTematicoController.prepareCreate()}" oncomplete="PF('createIndicadorWi').show();" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{indicadorController.prepareCreate()}" update=":IndicadorCreateForm" oncomplete="PF('createIndicadorWi').show();" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
 
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{msg.view}" update=":IndicadorViewForm" oncomplete="PF('viewIndicadorWi').show();"  disabled="#{empty indicadorController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+
+
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{indicadorController.fixSelectOneMenu()}" update=":IndicadorEditForm" oncomplete="PF('editIndicadorWi').show();" disabled="#{empty indicadorController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
+
+
+                                <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{indicadorController.deleteItem()}" update="growl,indicadorDataList" 
+                                                 disabled="#{empty indicadorController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide(),PF('indicadorTable').filter();">
+                                    <p:confirm header="Información General" message="Desea eliminar este registro? " icon="fa fa-warning"/>
+                                </p:commandButton>
 
                             </div>
                         </div>
@@ -96,7 +108,7 @@
                                     <p:dataExporter type="xml" target="dataList" fileName="SIIPG-EjesIndicadores" />
                                 </h:commandLink>
                             </div>
-                            
+
                         </div>
                     </div>
                 </f:facet>
@@ -105,6 +117,10 @@
 
         <ui:include src="/confirmation.xhtml"/>
         <ui:include src="Create.xhtml" /> 
+        <ui:include src="View.xhtml" />
+        <ui:include src="Edit.xhtml" />
+
+
 
     </h:body>
 </html>

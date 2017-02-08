@@ -32,7 +32,7 @@
 
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Guardar" actionListener="#{ejeTematicoController.createItem()}"  update=":EjetematicoListForm:dataList,growl" oncomplete="PF('createEjeWi').hide();"/>
+                    <p:commandButton value="Guardar" actionListener="#{ejeTematicoController.createItem()}"  update=":EjetematicoListForm:dataList,growl" oncomplete="PF('createEjeWi').hide(),PF('ejesTable').filter();"/>
                     <p:commandButton value="Cancelar" type="button" onclick="PF('createEjeWi').hide();" /> 
                 </h:panelGroup>
 

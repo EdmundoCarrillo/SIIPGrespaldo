@@ -37,7 +37,7 @@
 
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Actualizar" actionListener="#{variableController.updateItem()}"  update=":VariableListForm:varDataList,growl" oncomplete="PF('editVarWi').hide();"/>
+                    <p:commandButton value="Actualizar" actionListener="#{variableController.updateItem()}"  update=":VariableListForm:varDataList,growl" oncomplete="PF('editVarWi').hide(),PF('variablesTable').filter();"/>
                     <p:commandButton value="Cancelar" type="button" onclick="PF('editVarWi').hide();" /> 
                 </h:panelGroup>
 

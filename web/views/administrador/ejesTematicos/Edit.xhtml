@@ -32,7 +32,7 @@
 
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Actualizar" actionListener="#{ejeTematicoController.updateItem()}"  update=":EjetematicoListForm:dataList,growl" oncomplete="PF('editEjeWi').hide();"/>
+                    <p:commandButton value="Actualizar" actionListener="#{ejeTematicoController.updateItem()}"  update=":EjetematicoListForm:dataList,growl" oncomplete="PF('editEjeWi').hide(),PF('ejesTable').filter();"/>
                     <p:commandButton value="Cancelar" type="button" onclick="PF('editEjeWi').hide();" /> 
                 </h:panelGroup>
 
