@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11/02/2017 08:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.ipn.mx.siipg.modelo.IndicadorTienePeriodo" table="indicador_tiene_periodo" optimistic-lock="version">
+        <composite-id name="id" class="com.ipn.mx.siipg.modelo.IndicadorTienePeriodoId">
+            <key-property name="indicadorId" type="int">
+                <column name="indicador_id" />
+            </key-property>
+            <key-property name="periodoId" type="int">
+                <column name="periodo_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="indicador" class="com.ipn.mx.siipg.modelo.Indicador" update="false" insert="false" fetch="select">
+            <column name="indicador_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="periodo" class="com.ipn.mx.siipg.modelo.Periodo" update="false" insert="false" fetch="select">
+            <column name="periodo_id" not-null="true" />
+        </many-to-one>
+        <property name="resultado" type="float">
+            <column name="resultado" precision="12" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

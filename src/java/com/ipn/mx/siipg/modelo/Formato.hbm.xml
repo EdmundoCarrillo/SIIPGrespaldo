@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11/02/2017 08:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.ipn.mx.siipg.modelo.Formato" table="formato"  optimistic-lock="version">
+        <id name="indicadorId" type="int">
+            <column name="indicador_id" />
+            <generator class="foreign">
+                <param name="property">indicador</param>
+            </generator>
+        </id>
+        <one-to-one name="indicador" class="com.ipn.mx.siipg.modelo.Indicador" constrained="true"></one-to-one>
+        <property name="formato" type="int">
+            <column name="formato" not-null="true" />
+        </property>
+        <property name="idDivisor" type="int">
+            <column name="id_divisor" not-null="true" />
+        </property>
+        <property name="idDividendo" type="int">
+            <column name="id_dividendo" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

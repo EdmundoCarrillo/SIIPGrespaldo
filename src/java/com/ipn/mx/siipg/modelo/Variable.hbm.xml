@@ -20,8 +20,8 @@
         <property name="estatus" type="int">
             <column name="estatus" not-null="true" />
         </property>
-        <property name="valor" type="java.lang.Float">
-            <column name="valor" precision="12" scale="0" />
+        <property name="fecha" type="string">
+            <column name="fecha" length="45" />
         </property>
         <set name="variablechecks" table="variablecheck" inverse="true" lazy="true" fetch="select">
             <key>

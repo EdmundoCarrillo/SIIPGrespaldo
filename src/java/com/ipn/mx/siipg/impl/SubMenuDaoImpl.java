@@ -49,12 +49,12 @@ public class SubMenuDaoImpl implements SubMenuDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-//    public static void main(String[] args) {
-//        SubMenuDao subMenuDao = new SubMenuDaoImpl();
-//        List<Opcionesmenu> subMenuList = subMenuDao.loadSubMenus();
-//        for (Opcionesmenu subMenu : subMenuList) {
-//            System.out.println(subMenu.getNombre());
-//        }
-//    }
+   /* public static void main(String[] args) {
+        SubMenuDao subMenuDao = new SubMenuDaoImpl();
+        List<Opcionesmenu> subMenuList = subMenuDao.loadSubMenus();
+        for (Opcionesmenu subMenu : subMenuList) {
+            System.out.println(subMenu.getNombre());
+        }
+    }*/
 
 }

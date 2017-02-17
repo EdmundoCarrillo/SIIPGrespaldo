@@ -5,14 +5,19 @@
  */
 package com.ipn.mx.siipg.beans;
 
+import com.ipn.mx.siipg.dao.FormatoDao;
 import com.ipn.mx.siipg.dao.IndicadorDao;
+import com.ipn.mx.siipg.impl.FormatoDaoImpl;
 import com.ipn.mx.siipg.impl.IndicadorDaoImpl;
+import com.ipn.mx.siipg.modelo.Formato;
 import com.ipn.mx.siipg.modelo.Indicador;
 import com.ipn.mx.siipg.modelo.Variable;
+import static com.sun.javafx.logging.PulseLogger.addMessage;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -85,51 +90,43 @@ public class AdministrarGraficaController implements Serializable{
         int option = Integer.parseInt(selectGraphic);
         image = namesImg[option];
     }
+     
     
-    
-
- 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public void generateFormat(){
+        int indi, divisor, dividendo, grafica;
+        if (selectIndicador == null ){ return;}
+        try{
+            indi = Integer.parseInt(selectIndicador);
+            grafica = Integer.parseInt(selectGraphic);
+            divisor = Integer.parseInt(selectVarible);
+            dividendo = Integer.parseInt(selectVarible2);
+            Formato nuevo = null ;
+            Indicador indicador = null;
+            FormatoDao formato = new FormatoDaoImpl();
+            for(Indicador temp: indicadores){
+                if(temp.getId() ==indi){
+                    indicador = temp;
+                }
+            }           
+            if ( indicador.getFormato() == null){
+                nuevo = new Formato(indicador, grafica, divisor, dividendo);
+                formato.newFormato(nuevo);
+                addMessage(ResourceBundle.getBundle("Bundle").getString("formato.new"));
+            }
+            else{
+                nuevo = new Formato(indicador, grafica, divisor, dividendo);
+                formato.updateFormato(nuevo);
+                addMessage(ResourceBundle.getBundle("Bundle").getString("formato.update"));
+            }           
+        }
+        catch(Exception e){
+            System.err.println(e);
+        }
+    }
     
     
     
     
-    
-    
-    
-    
-    
-    
+  
     
 }

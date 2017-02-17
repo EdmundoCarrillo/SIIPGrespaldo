@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11/02/2017 08:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.ipn.mx.siipg.modelo.Periodo" table="periodo"  optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="periodo" type="string">
+            <column name="periodo" length="45" />
+        </property>
+        <property name="estatus" type="java.lang.Integer">
+            <column name="estatus" />
+        </property>
+        <set name="indicadorTienePeriodos" table="indicador_tiene_periodo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="periodo_id" not-null="true" />
+            </key>
+            <one-to-many class="com.ipn.mx.siipg.modelo.IndicadorTienePeriodo" />
+        </set>
+        <set name="variablechecks" table="variablecheck" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="periodo_id" not-null="true" />
+            </key>
+            <one-to-many class="com.ipn.mx.siipg.modelo.Variablecheck" />
+        </set>
+    </class>
+</hibernate-mapping>

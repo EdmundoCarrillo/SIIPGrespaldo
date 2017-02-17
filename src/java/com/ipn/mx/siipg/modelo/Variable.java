@@ -16,7 +16,7 @@ public class Variable  implements java.io.Serializable {
      private String nombre;
      private String base;
      private int estatus;
-     private Float valor;
+     private String fecha;
      private Set variablechecks = new HashSet(0);
 
     public Variable() {
@@ -29,13 +29,13 @@ public class Variable  implements java.io.Serializable {
         this.nombre = nombre;
         this.estatus = estatus;
     }
-    public Variable(int id, Unidadresponsable unidadresponsable, String nombre, String base, int estatus, Float valor, Set variablechecks) {
+    public Variable(int id, Unidadresponsable unidadresponsable, String nombre, String base, int estatus,String fecha , Set variablechecks) {
        this.id = id;
        this.unidadresponsable = unidadresponsable;
        this.nombre = nombre;
        this.base = base;
        this.estatus = estatus;
-       this.valor = valor;
+       this.fecha = fecha;
        this.variablechecks = variablechecks;
     }
    
@@ -74,12 +74,12 @@ public class Variable  implements java.io.Serializable {
     public void setEstatus(int estatus) {
         this.estatus = estatus;
     }
-    public Float getValor() {
-        return this.valor;
+    public String getFecha() {
+        return this.fecha;
     }
     
-    public void setValor(Float valor) {
-        this.valor = valor;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
     public Set getVariablechecks() {
         return this.variablechecks;

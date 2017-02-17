@@ -7,7 +7,6 @@ package com.ipn.mx.siipg.impl;
 
 import com.ipn.mx.siipg.dao.UsuarioDao;
 import com.ipn.mx.siipg.modelo.Usuario;
-import com.ipn.mx.siipg.modelo.UsuarioId;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -131,12 +130,14 @@ public class UsuarioDaoImpl implements UsuarioDao {
         return us;
     }
 
-//    public static void main(String[] args) {
-//        Usuario usu = new Usuario();
-//        usu.setId(new UsuarioId(1, "CABE9211294D6"));
-//        usu.setPassword("obiwan");
-//        UsuarioDao usuarioDao = new UsuarioDaoImpl();
-//        Usuario user = usuarioDao.checkUser(usu);
-//        System.out.println(user.getNombre());
-//    }
+   /* public static void main(String[] args) {
+        
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
+        Usuario user = usuarioDao.checkRfc("rapg930627");
+        if(user != null){
+        System.out.println(user.getNombre());}
+        else{
+            System.out.println("no habia nada");
+        }
+    }*/
 }

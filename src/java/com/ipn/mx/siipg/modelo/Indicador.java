@@ -1,13 +1,17 @@
 package com.ipn.mx.siipg.modelo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Indicador implements java.io.Serializable {
 
     private Integer id;
     private Ejetematico ejetematico;
     private String nombre;
     private String rutaPdf;
-    private Float resultado;
     private int estatus;
+    private Formato formato;    
+    private Set indicadorTienePeriodos = new HashSet(0);
 
     public Indicador() {
     }
@@ -44,20 +48,28 @@ public class Indicador implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-    public Float getResultado() {
-        return resultado;
-    }
-
-    public void setResultado(Float resultado) {
-        this.resultado = resultado;
-    }
-
     public int getEstatus() {
         return estatus;
     }
 
     public void setEstatus(int estatus) {
         this.estatus = estatus;
+    }
+    
+    public Formato getFormato() {
+        return this.formato;
+    }
+    
+    public void setFormato(Formato formato) {
+        this.formato = formato;
+    }
+    
+    public Set getIndicadorTienePeriodos() {
+        return this.indicadorTienePeriodos;
+    }
+    
+    public void setIndicadorTienePeriodos(Set indicadorTienePeriodos) {
+        this.indicadorTienePeriodos = indicadorTienePeriodos;
     }
 
 }
