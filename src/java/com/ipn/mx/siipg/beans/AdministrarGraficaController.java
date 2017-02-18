@@ -7,6 +7,7 @@ package com.ipn.mx.siipg.beans;
 
 import com.ipn.mx.siipg.dao.FormatoDao;
 import com.ipn.mx.siipg.dao.IndicadorDao;
+import com.ipn.mx.siipg.dao.util.JsfUtil;
 import com.ipn.mx.siipg.impl.FormatoDaoImpl;
 import com.ipn.mx.siipg.impl.IndicadorDaoImpl;
 import com.ipn.mx.siipg.modelo.Formato;
@@ -111,12 +112,15 @@ public class AdministrarGraficaController implements Serializable{
             if ( indicador.getFormato() == null){
                 nuevo = new Formato(indicador, grafica, divisor, dividendo);
                 formato.newFormato(nuevo);
-                addMessage(ResourceBundle.getBundle("Bundle").getString("formato.new"));
+                JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("formato.new"));
             }
             else{
-                nuevo = new Formato(indicador, grafica, divisor, dividendo);
+                nuevo = indicador.getFormato();
+                nuevo.setFormato(grafica);
+                nuevo.setIdDivisor(divisor);
+                nuevo.setIdDividendo(dividendo);
                 formato.updateFormato(nuevo);
-                addMessage(ResourceBundle.getBundle("Bundle").getString("formato.update"));
+                JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("formato.update"));
             }           
         }
         catch(Exception e){

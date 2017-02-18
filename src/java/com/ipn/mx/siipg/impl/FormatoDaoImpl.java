@@ -41,7 +41,7 @@ public class FormatoDaoImpl implements FormatoDao {
         Transaction tx = session.getTransaction();
         try {
             tx.begin();
-            session.update(formato);
+            session.update(formato);          
             tx.commit();
         } catch (HibernateException ex) {
             if (tx != null) {
