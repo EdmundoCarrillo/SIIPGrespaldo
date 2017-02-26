@@ -137,4 +137,8 @@ public class Usuario implements java.io.Serializable {
         this.telefonos = telefonos;
     }
 
+    public String getFullName() {
+        return this.nombre + " " + this.apellidoPaterno + " " +this.apellidoMaterno;
+    }
+
 }
