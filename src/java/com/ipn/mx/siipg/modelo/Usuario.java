@@ -138,7 +138,9 @@ public class Usuario implements java.io.Serializable {
     }
 
     public String getFullName() {
-        return this.nombre + " " + this.apellidoPaterno + " " +this.apellidoMaterno;
+        return this.nombre != null ? this.nombre : " " + 
+                " " + this.apellidoPaterno != null ? this.apellidoPaterno : " " + 
+                " " + this.apellidoMaterno != null ? this.apellidoMaterno : " ";
     }
 
 }
