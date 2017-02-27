@@ -6,12 +6,10 @@
 package com.ipn.mx.siipg.dao.util;
 
 import com.ipn.mx.siipg.modelo.Usuario;
-import com.ipn.mx.siipg.modelo.UsuarioId;
-import java.net.PasswordAuthentication;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.Properties;
-import javax.mail.Authenticator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -25,7 +23,7 @@ import javax.mail.internet.MimeMessage;
  * @author jresendiz
  */
 public class MailService {
-
+    private static final Logger LOGGER = Logger.getLogger( MailService.class.getName() );
     private String DEFAULT_EMAIL = "";
     private String PASSWORD = "";
 
@@ -73,5 +71,6 @@ public class MailService {
         transport.connect(SMTP_HOST, DEFAULT_EMAIL, PASSWORD);
         transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
         transport.close();
+        LOGGER.log(Level.INFO, "Email has been sent!");
     }    
 }
