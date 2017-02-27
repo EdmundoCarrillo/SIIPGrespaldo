@@ -14,7 +14,12 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.ipn.mx.siipg.dao.util.JsfUtil;
+import com.ipn.mx.siipg.dao.util.MailService;
+import java.util.Random;
 import java.util.ResourceBundle;
+import javax.faces.application.FacesMessage;
+import javax.mail.MessagingException;
+import org.primefaces.context.RequestContext;
 
 @Named
 @SessionScoped
@@ -23,6 +28,7 @@ public class SessionController implements Serializable {
 
     private Usuario usuario = new Usuario();
     private UsuarioId usuarioId = new UsuarioId();
+    private MailService mailService;
 
     public Usuario getUsuario() {
         return usuario;
@@ -60,6 +66,28 @@ public class SessionController implements Serializable {
             System.out.println(ex.toString());
         }
 
+    }    
+
+    public void restaurarContrasena() {
+        String rfc = usuarioId.getRfc();
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
+        mailService = new MailService();
+        if (rfc != null && rfc.trim().length() != 0) {
+            Usuario tempUser = usuarioDao.checkRfc(rfc);
+            String newPassword = "DummyPassword" + new Random().nextInt(99);
+            if (tempUser != null) {
+                tempUser.setPassword(newPassword);
+                usuarioDao.updateUser(tempUser);
+                try {
+                    mailService.sendRecoveryPasswordEmail(tempUser);
+                    RequestContext context = RequestContext.getCurrentInstance();        
+                    context.execute("PF('recoverPasswordWI').hide();");
+                    JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("mail.recovery"));
+                } catch (MessagingException messagingException) {
+                    JsfUtil.addErrorMessage(ResourceBundle.getBundle("Bundle").getString("mail.error"));
+                }
+            }
+        }
     }
 
 }
