@@ -5,7 +5,9 @@
  */
 package com.ipn.mx.siipg.dao;
 
+import com.ipn.mx.siipg.dao.util.VarProveedorView;
 import com.ipn.mx.siipg.modelo.Variable;
+import com.ipn.mx.siipg.modelo.Unidadresponsable;
 import java.util.List;
 
 /**
@@ -21,4 +23,7 @@ public interface VariableDao {
     public void updateVariable(Variable variable);
 
     public void deleteVariable(Variable variable);
+
+    public List<Variable> loadVariableByUnidad(Unidadresponsable unidadResponsable);
+
 }

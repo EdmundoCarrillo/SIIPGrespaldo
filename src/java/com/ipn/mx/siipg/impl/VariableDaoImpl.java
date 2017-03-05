@@ -6,9 +6,12 @@
 package com.ipn.mx.siipg.impl;
 
 import com.ipn.mx.siipg.dao.VariableDao;
+import com.ipn.mx.siipg.dao.util.VarProveedorView;
+import com.ipn.mx.siipg.modelo.Unidadresponsable;
 import com.ipn.mx.siipg.modelo.Variable;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -89,11 +92,51 @@ public class VariableDaoImpl implements VariableDao {
         }
     }
 
+    @Override
+    public List<Variable> loadVariableByUnidad(Unidadresponsable unidadResponsable) {
+        List varList = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String stringQuery = "From Variable v where v.unidadresponsable.id=" + unidadResponsable.getId() + "";
+        try {
+
+            Query query = session.createQuery(stringQuery);
+            varList = query.list();
+
+        } catch (HibernateException ex) {
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
+        return varList;
+
+    }
+
+//    @Override
+//    public List<VarProveedorView> loadVarsForProveedor(Unidadresponsable unidadResponsable) {
+//        List varList = null;
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        String stringQuery = "select v.nombre from Variable v";
+//        try {
+//
+//            Query query = session.createQuery(stringQuery);
+//            varList = query.list();
+//
+//        } catch (HibernateException ex) {
+//            System.out.println(ex.toString());
+//        } finally {
+//            session.close();
+//        }
+//        return varList;
+//
+//    }
+//
 //    public static void main(String[] args) {
 //        VariableDao variableDao = new VariableDaoImpl();
-//        List<Variable> variableList = variableDao.loadVariables();
-//        for (Variable var : variableList) {
-//            System.out.println(var.getEstatus());
+//        Unidadresponsable unidadResponsable = new Unidadresponsable();
+//        unidadResponsable.setId(1);
+//        List<VarProveedorView> variableList = variableDao.loadVarsForProveedor(unidadResponsable);
+//        for (VarProveedorView var : variableList) {
+//            System.out.println(var.getNombre());
 //        }
 //    }
 }

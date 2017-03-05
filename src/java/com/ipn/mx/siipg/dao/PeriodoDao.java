@@ -5,10 +5,14 @@
  */
 package com.ipn.mx.siipg.dao;
 
+import com.ipn.mx.siipg.modelo.Periodo;
+
 /**
  *
  * @author Edmundo Carrillo
  */
-public interface VariableCheck {
-    
+public interface PeriodoDao {
+
+    public Periodo periodoByMAXID();
+
 }

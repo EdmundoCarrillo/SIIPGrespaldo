@@ -22,14 +22,14 @@
     <h:body style="background-color:whitesmoke;">
 
         <h:form >
-            <p:dataTable value="#{variableController.items}" var="variable" widgetVar="variablesTable" 
+            <p:dataTable value="#{varProveedorController.items}" var="variable" widgetVar="variablesTable" 
                          style="text-align: left; border-collapse: collapse; margin-bottom: 20px;"
                          paginator="true" rows="15"  
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="15,20,25,30" 
                          currentPageReportTemplate="({currentPage} de {totalPages})" 
                          paginatorPosition="bottom"
-                         selectionMode="single" selection="#{variableController.current}"
+                         selectionMode="single" selection="#{varProveedorController.current}"
                          rowKey="#{variable.id}"
                          emptyMessage="No se encontraron coincidencias para la descripción dada."
                          editable="true">
@@ -49,23 +49,26 @@
                 <p:column style="width: 120px;" headerText="Valor">
 
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="1000" /></f:facet>
-                        <f:facet name="input"><p:inputText id="modelInput" style="width:100%" /></f:facet>
+
+                        <f:facet name="output">
+                            <h:outputText value="#{varProveedorController.getAdminReview(variable).valor}" />
+                        </f:facet>
+
+                        <f:facet name="input">
+                            <p:inputText id="modelInput" style="width:100%" />
+                        </f:facet>
                     </p:cellEditor>
 
                 </p:column>
 
 
-                <p:column style="width: 120px; color: red;">
-                    <f:facet name="header">
-                        <h:outputText value="Valido"/>
-                    </f:facet>
-                    <h:outputText value="No valido "/>
+                <p:column headerText="Estatus" style="width:300px;">
+                    <h:outputLabel value="#{varProveedorController.getAdminReview(variable).estatus==0? 'No valido' : 'Valido' }"/>
                 </p:column>
 
                 <p:column headerText="Observación" style="width: 350px; color: red;">
 
-                    <h:outputText value="El total de la matrícula no es correcto favor de revisar y corregir"/>
+                    <h:outputText value="#{varProveedorController.getAdminReview(variable).comentario}"/>
                 </p:column>
 
 
@@ -108,7 +111,7 @@
                 </f:facet>
 
             </p:dataTable>
-
+            Nota :* El valor de sus variables será asignado al ultimo periodo escolar creado por su administrador.
         </h:form>
 
         <ui:include src="/confirmation.xhtml"/>
