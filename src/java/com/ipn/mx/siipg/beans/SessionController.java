@@ -54,6 +54,7 @@ public class SessionController implements Serializable {
 
             if (user != null) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioId", this.usuarioId);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 
             } else {

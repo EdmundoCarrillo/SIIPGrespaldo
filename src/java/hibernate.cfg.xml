@@ -4,9 +4,9 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/entidadgeneror</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/entidadgenerov1</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">obiwan</property>
+    <property name="hibernate.connection.password">n0m3l0s3</property>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <mapping resource="com/ipn/mx/siipg/modelo/Formato.hbm.xml"/>
     <mapping resource="com/ipn/mx/siipg/modelo/Menu.hbm.xml"/>
