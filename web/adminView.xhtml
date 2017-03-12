@@ -226,9 +226,7 @@
 
                         <p:outputLabel value="RFC/Homoclave: "  style=" color: #0033ff;" />
                         <h:panelGroup id="prfc">
-                            <p:inputText value="#{usuario.id.rfc}" required="true" size="30">
-                                <p:ajax event="blur"  listener="#{userController.verifyRfc()}" update="validarfc"  />
-                            </p:inputText>
+                            <p:inputText value="#{usuario.id.rfc}" disabled="true" required="true" size="30"/>
                             <p:outputLabel id="validarfc" value="#{userController.rfcmsg}"  />
                         </h:panelGroup>
                         <p:outputLabel value="Email:"  style="color: #0033ff;" />
@@ -240,31 +238,17 @@
                         <p:outputLabel value="No. Empleado:*"  style=" color: #0033ff;" />
                         <p:inputText value="#{usuario.numeroEmpleado}" required="true" size="50"  />
 
-                        <p:outputLabel value="Area"  style=" color: #0033ff;" />
-                        <p:selectOneMenu value="#{userController.selectedArea}"  style="width: 200px">
-                            <f:selectItems value="#{userController.listArea}" var="area" itemLabel="#{area.nombre}" itemValue="#{area.id}" />
-                            <p:ajax listener="#{userController.updateunidades()}" event="change" update="unidadr2"  />
-                        </p:selectOneMenu> 
-
                         <p:outputLabel value="Password" style="color: #0033ff" />
-                        <p:password value="#{usuario.password}" id="createp" required="true" requiredMessage="Ingrese una contraseña" match="createp2" validatorMessage="Las contraseña debe conincidir" feedback="true" />
-
-                        <p:outputLabel value="Confirmar Password" style="color: #0033ff" />
-                        <p:password value="confir" id="createp2" required="true" requiredMessage="Confirme contraseña" />
-                    </p:panelGrid>
-
-                    <p:panelGrid columns="2">                        
-                        <p:outputLabel value="Unidad Responsable:"  style="color: #0033ff;" />
-                        <p:selectOneMenu id="unidadr2" filter="true"  value="#{userController.selectedUnidad}"  >
-                            <f:selectItems value="#{userController.listu}" var="unidad" itemLabel="#{unidad.nombre}" itemValue="#{unidad.id}"/>
-                        </p:selectOneMenu>
-
-                    </p:panelGrid>
+                        <p:password value="#{usuario.password}" redisplay="true" id="createp" requiredMessage="Ingrese una contraseña" />
+                        
+                    </p:panelGrid>                   
                     <br/>
                     <p:commandButton 
                         id="updateProfileCommandButton"  
                         value="Actualizar" 
                         actionListener="#{sessionController.actualizarPerfil()}"
+                        onstart="PF('loading').show();" 
+                        onsuccess="PF('loading').hide();"
                         update="growlEditProfile"/>
                     <p:commandButton value="Cancelar" type="button" onclick="PF('editProfileWI').hide();" />                    
                 </h:panelGroup>                
