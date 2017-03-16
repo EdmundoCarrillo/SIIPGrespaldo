@@ -216,27 +216,35 @@
                 <h:panelGroup id="display">                                        
                     <p:panelGrid columns="4">
                         <p:outputLabel value="Nombre:" style=" color: #0033ff; " />
-                        <p:inputText value="#{usuario.nombre}" required="true" size="50" />                                    
+                        <p:inputText value="#{usuario.nombre}" required="true" size="50" validatorMessage="El nombre solo debe contener caracteres validos." requiredMessage="El usuario es requerido">
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText>                                    
 
                         <p:outputLabel value="Apellido Paterno:"   style="color: #0033ff;" />
-                        <p:inputText value="#{usuario.apellidoPaterno}" required="true" size="50"  /> 
-
+                        <p:inputText value="#{usuario.apellidoPaterno}" required="true" size="50" validatorMessage="El apellido solo debe contener caracteres validos." requiredMessage="El apellido paterno es requerido">
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText>
                         <p:outputLabel value="Apellido Materno:"  style=" color: #0033ff;" />
-                        <p:inputText value="#{usuario.apellidoMaterno}" required="true" size="50" />
-
+                        <p:inputText value="#{usuario.apellidoMaterno}" required="true" size="50" validatorMessage="El apellido solo debe contener caracteres validos." requiredMessage="El apellido materno es requerido" >
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText>
                         <p:outputLabel value="RFC/Homoclave: "  style=" color: #0033ff;" />
                         <h:panelGroup id="prfc">
-                            <p:inputText value="#{usuario.id.rfc}" disabled="true" required="true" size="30"/>
+                            <p:inputText value="#{usuario.id.rfc}" disabled="true" required="true" validatorMessage="Debe ser alfanumérico" requiredMessage="El RFC es obligatorio" size="30">
+                                <f:validateRegex pattern="[a-zA-Z0-9]+"/>
+                            </p:inputText>
                             <p:outputLabel id="validarfc" value="#{userController.rfcmsg}"  />
                         </h:panelGroup>
                         <p:outputLabel value="Email:"  style="color: #0033ff;" />
-                        <p:inputText value="#{usuario.email}" required="true" size="50" />
+                        <p:inputText value="#{usuario.email}" required="true" size="50" requiredMessage="El email es obligatorio" />
 
                         <p:outputLabel value="Telefonos:"  style=" color: #0033ff;" />
-                        <p:inputTextarea  value="#{usuario.telefonos}" required="true"   />             
+                        <p:inputTextarea  value="#{usuario.telefonos}">
+                            <f:validateRegex pattern="[0-9]+"/>
+                        </p:inputTextarea>             
 
                         <p:outputLabel value="No. Empleado:*"  style=" color: #0033ff;" />
-                        <p:inputText value="#{usuario.numeroEmpleado}" required="true" size="50"  />
+                        <p:inputText value="#{usuario.numeroEmpleado}" required="true" requiredMessage="El número de empleado es obligatorio" size="50"  />
 
                         <p:outputLabel value="Password" style="color: #0033ff" />
                         <p:password value="#{usuario.password}" redisplay="true" id="createp" requiredMessage="Ingrese una contraseña" />
