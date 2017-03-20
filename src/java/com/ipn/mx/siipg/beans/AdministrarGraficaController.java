@@ -35,7 +35,12 @@ public class AdministrarGraficaController implements Serializable{
     private String selectVarible;
     private String selectVarible2;
     private String image = "colum.png";
+    private final String reportServerUrl;
     private List<Indicador> indicadores;
+
+    public AdministrarGraficaController() {
+        this.reportServerUrl = System.getenv("REPORT_SERVER") != null  ? System.getenv("REPORT_SERVER") : "https://siipg-reports.herokuapp.com";
+    }
 
     public String getSelectGraphic() {
         return selectGraphic;
@@ -128,9 +133,7 @@ public class AdministrarGraficaController implements Serializable{
         }
     }
     
-    
-    
-    
-  
-    
+    public String getReportServerUrl() {
+        return reportServerUrl + "/reports/generateReport";
+    }
 }

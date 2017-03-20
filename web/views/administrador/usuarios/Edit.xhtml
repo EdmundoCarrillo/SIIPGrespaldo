@@ -19,7 +19,7 @@
                     <p:panelGrid columns="4">
 
                         <p:outputLabel value="Nombre:" style=" color: #0033ff; " />
-                        <p:inputText value="#{userController.current.nombre}" validatorMessage="El nombre solo debe contener caracteres validos." required="true" validatorMessage="El valor es invalido. Solo letras permitidas" requiredMessage="El nombre es obligatorio" size="50" >
+                        <p:inputText value="#{userController.current.nombre}" validatorMessage="El nombre solo debe contener caracteres validos." required="true" requiredMessage="El nombre es obligatorio" size="50" >
                             <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
                         </p:inputText>                                    
 
