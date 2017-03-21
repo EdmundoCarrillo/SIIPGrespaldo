@@ -17,7 +17,6 @@ import com.ipn.mx.siipg.dao.util.JsfUtil;
 import com.ipn.mx.siipg.dao.util.MailService;
 import java.util.Random;
 import java.util.ResourceBundle;
-import javax.faces.application.FacesMessage;
 import javax.mail.MessagingException;
 import org.primefaces.context.RequestContext;
 
@@ -53,7 +52,9 @@ public class SessionController implements Serializable {
             Usuario user = usuarioDao.checkUser(this.usuario);
 
             if (user != null) {
+                this.usuario = user;
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioId", this.usuarioId);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 
             } else {
@@ -89,5 +90,18 @@ public class SessionController implements Serializable {
             }
         }
     }
-
+    
+    public void actualizarPerfil() {
+        Usuario sessionUser = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        String password = sessionUser.getPassword() != null ? sessionUser.getPassword() : this.usuario.getPassword();
+        sessionUser.setPassword(password);        
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
+        usuarioDao.updateUser(sessionUser);
+        this.usuario = sessionUser;
+        RequestContext context = RequestContext.getCurrentInstance();        
+        context.execute("PF('editProfileWI').hide();");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioId", this.usuarioId);
+        JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("profile.update"));
+    }
 }

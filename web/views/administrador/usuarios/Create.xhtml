@@ -17,17 +17,24 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="4">
                         <p:outputLabel value="Nombre:" style=" color: #0033ff; " />
-                        <p:inputText value="#{userController.selected.nombre}" required="true" size="50" />                                    
+                        <p:inputText value="#{userController.selected.nombre}" validatorMessage="El nombre solo debe contener caracteres validos." required="true" size="50" requiredMessage="El nombre es obligatorio" >
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText>                                    
 
                         <p:outputLabel value="Apellido Paterno:"   style="color: #0033ff;" />
-                        <p:inputText value="#{userController.selected.apellidoPaterno}" required="true" size="50"  /> 
+                        <p:inputText value="#{userController.selected.apellidoPaterno}" required="true" validatorMessage="El apellido solo debe contener caracteres validos." requiredMessage="El apellido paterno es obligatorio" size="50"  >
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText> 
 
                         <p:outputLabel value="Apellido Materno:"  style=" color: #0033ff;" />
-                        <p:inputText value="#{userController.selected.apellidoMaterno}" required="true" size="50" />
+                        <p:inputText value="#{userController.selected.apellidoMaterno}" validatorMessage="El apellido solo debe contener caracteres validos." requiredMessage="El apellido paterno es obligatorio" required="true" size="50" >
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText>
 
                         <p:outputLabel value="RFC/Homoclave: "  style=" color: #0033ff;" />
                         <h:panelGroup id="prfc">
-                            <p:inputText value="#{userController.selected.id.rfc}" required="true" size="30">
+                            <p:inputText value="#{userController.selected.id.rfc}" validatorMessage="Debe ser alfanumérico" requiredMessage="El RFC es obligatorio" required="true" size="30">
+                                <f:validateRegex pattern="[a-zA-Z0-9]+" />
                                 <p:ajax event="blur"  listener="#{userController.verifyRfc()}" update="validarfc, createprocess"  />
                             </p:inputText>
                             <p:outputLabel id="validarfc" value="#{userController.rfcmsg}"  />
