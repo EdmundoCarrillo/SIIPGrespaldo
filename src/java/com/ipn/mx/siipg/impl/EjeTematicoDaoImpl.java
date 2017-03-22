@@ -7,8 +7,10 @@ package com.ipn.mx.siipg.impl;
 
 import com.ipn.mx.siipg.dao.EjeTematicoDao;
 import com.ipn.mx.siipg.modelo.Ejetematico;
+import com.ipn.mx.siipg.modelo.Indicador;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -86,6 +88,23 @@ public class EjeTematicoDaoImpl implements EjeTematicoDao {
         } finally {
             session.close();
         }
+    }
+     public List<Indicador> check(String indice) {
+        Ejetematico us = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String stringQuery = "from Indicador where ejeTematico_id ='" + indice + "'";
+        List indi = null;
+        try {
+
+            Query query = session.createQuery(stringQuery);
+            indi = query.list();
+        } catch (HibernateException ex) {
+
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
+        return indi;
     }
 
 //    public static void main(String[] args) {

@@ -6,6 +6,7 @@
 package com.ipn.mx.siipg.dao;
 
 import com.ipn.mx.siipg.modelo.Periodo;
+import java.util.List;
 
 /**
  *
@@ -14,5 +15,9 @@ import com.ipn.mx.siipg.modelo.Periodo;
 public interface PeriodoDao {
 
     public Periodo periodoByMAXID();
+    public List<Periodo> loadPeriodos();
+    public void newPeriodo(Periodo periodo);
+    public void updatePeriodo(Periodo periodo);
+    public void deletePeriodo(Periodo periodo);
 
 }
