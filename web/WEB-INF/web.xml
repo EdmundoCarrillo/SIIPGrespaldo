@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    
+    
+    <filter>
+        <filter-name>AuthorizationFilterAdmin</filter-name>
+        <filter-class>com.ipn.mx.siipg.filters.AuthorizationFilterAdmin</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>AuthorizationFilterAdmin</filter-name>
+        <url-pattern>/views/administrador/*</url-pattern>
+    </filter-mapping>
+    
+    <welcome-file-list>
+        <welcome-file>login.xhtml</welcome-file>
+    </welcome-file-list>
+    
+    
+    
+    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -21,9 +40,9 @@
     <welcome-file-list>
         <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
-       <!-- Definicion del Tema -->
-    <context-param>  
-        <param-name>primefaces.THEME</param-name>  
-        <param-value>omega</param-value>  
-    </context-param> 
+    <!-- Definicion del Tema -->
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>omega</param-value>
+    </context-param>
 </web-app>

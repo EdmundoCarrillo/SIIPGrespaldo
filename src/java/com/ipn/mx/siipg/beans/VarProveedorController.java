@@ -5,8 +5,10 @@
  */
 package com.ipn.mx.siipg.beans;
 
+import com.ipn.mx.siipg.dao.PeriodoDao;
 import com.ipn.mx.siipg.dao.VariableCheckDao;
 import com.ipn.mx.siipg.dao.VariableDao;
+import com.ipn.mx.siipg.impl.PeriodoDaoImpl;
 import com.ipn.mx.siipg.impl.VariableCheckDaoImpl;
 import com.ipn.mx.siipg.impl.VariableDaoImpl;
 import com.ipn.mx.siipg.modelo.Unidadresponsable;
@@ -26,6 +28,7 @@ public class VarProveedorController implements Serializable {
 
     private Variable current;
     private List<Variable> items;
+    private float varFloat;
 
     public Variable getCurrent() {
         return current;
@@ -60,6 +63,40 @@ public class VarProveedorController implements Serializable {
     public Variablecheck getAdminReview(Variable variable) {
         VariableCheckDao varCheckDao = new VariableCheckDaoImpl();
         return varCheckDao.checkByExistingVar(variable);
+    }
+
+    public void addVariableCheck(Variable var) {
+        System.out.println(varFloat);
+
+        VariableCheckDao varCheckDao = new VariableCheckDaoImpl();
+        Variablecheck varCheck = varCheckDao.checkByExistingVar(var);
+
+        if (varCheck.isNoIniciada() == true) {
+            PeriodoDao periodoDao = new PeriodoDaoImpl();
+
+            System.out.println("NO existe ");
+            varCheck.setComentario("No revisada, regrese mas tarde..");
+            varCheck.setEstatus(0);
+            varCheck.setValor(varFloat);
+            varCheck.setVariable(var);
+            varCheck.setPeriodo(periodoDao.periodoByMAXID());
+            varCheckDao.newVariableCheck(varCheck);
+            
+        } else if (varCheck.isNoIniciada() != true) {
+            System.out.println("SI existe");
+            varCheck.setValor(varFloat);
+            varCheckDao.updateVariableCheck(varCheck);
+
+        }
+
+    }
+
+    public float getVarFloat() {
+        return varFloat;
+    }
+
+    public void setVarFloat(float varFloat) {
+        this.varFloat = varFloat;
     }
 
 }

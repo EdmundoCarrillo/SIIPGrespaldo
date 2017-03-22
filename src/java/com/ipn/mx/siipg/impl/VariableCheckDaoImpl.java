@@ -6,6 +6,7 @@
 package com.ipn.mx.siipg.impl;
 
 import com.ipn.mx.siipg.dao.VariableCheckDao;
+import com.ipn.mx.siipg.modelo.Periodo;
 import com.ipn.mx.siipg.modelo.Variable;
 import com.ipn.mx.siipg.modelo.Variablecheck;
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class VariableCheckDaoImpl implements VariableCheckDao {
                 varCheck.setEstatus(0);
                 varCheck.setValor(0.0f);
                 varCheck.setComentario("No revisada, regrese mas tarde..");
+                varCheck.setNoIniciada(true);
             }
             tx.commit();
         } catch (HibernateException ex) {
@@ -89,6 +91,42 @@ public class VariableCheckDaoImpl implements VariableCheckDao {
         }
         return varCheck;
 
+    }
+
+    @Override
+    public void newVariableCheck(Variablecheck varCheck) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        try {
+            tx.begin();
+            session.save(varCheck);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public void updateVariableCheck(Variablecheck varCheck) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        try {
+            tx.begin();
+            session.update(varCheck);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
     }
 
 //    public static void main(String[] args) {
@@ -126,4 +164,21 @@ public class VariableCheckDaoImpl implements VariableCheckDao {
 //        Variablecheck check = varDao.checkByExistingVar(variable);
 //        System.out.println(check.getId());
 //    }
+    public static void main(String[] args) {
+        VariableCheckDao checkDao = new VariableCheckDaoImpl();
+        Variablecheck check = new Variablecheck();
+        Periodo periodo = new Periodo();
+        periodo.setId(4);
+        Variable variable = new Variable();
+        variable.setId(7);
+
+        check.setId(15);
+        check.setComentario("from hibernate 1we");
+        check.setEstatus(1);
+        check.setValor(85.2f);
+        check.setVariable(variable);
+        check.setPeriodo(periodo);
+
+        checkDao.newVariableCheck(check);
+    }
 }

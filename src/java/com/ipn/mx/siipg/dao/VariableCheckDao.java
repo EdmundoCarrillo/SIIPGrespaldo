@@ -21,4 +21,8 @@ public interface VariableCheckDao {
 
     public Variablecheck checkByExistingVar(Variable variable);
 
+    public void newVariableCheck(Variablecheck varCheck);
+
+    public void updateVariableCheck(Variablecheck varCheck);
+
 }

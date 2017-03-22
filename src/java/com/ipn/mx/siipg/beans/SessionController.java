@@ -14,7 +14,9 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.ipn.mx.siipg.dao.util.JsfUtil;
+import java.io.IOException;
 import java.util.ResourceBundle;
+import javax.faces.context.ExternalContext;
 
 @Named
 @SessionScoped
@@ -60,6 +62,41 @@ public class SessionController implements Serializable {
             System.out.println(ex.toString());
         }
 
+    }
+
+    public void signOff() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+        } catch (Exception ex) {
+            System.out.println(ex.toString()
+            );
+        }
+
+    }
+
+    public String getNombreFromSession() {
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        Usuario user = (Usuario) context.getSessionMap().get("usuario");
+        return user.getNombre() + " " + user.getApellidoPaterno() + " " + user.getApellidoMaterno();
+    }
+
+    public String getRfcFromSession() {
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        Usuario user = (Usuario) context.getSessionMap().get("usuario");
+        return user.getId().getRfc();
+    }
+
+    public String getUnidadFromSession() {
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        Usuario user = (Usuario) context.getSessionMap().get("usuario");
+        return user.getUnidadresponsable().getNombre();
+    }
+
+    public String getRolFromSession() {
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        Usuario user = (Usuario) context.getSessionMap().get("usuario");
+        return user.getRol().getRol();
     }
 
 }

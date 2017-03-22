@@ -55,16 +55,20 @@
                         </f:facet>
 
                         <f:facet name="input">
-                            <p:inputText id="modelInput" style="width:100%" />
+                            <p:inputText value="#{varProveedorController.varFloat}" style="width:100%" />
                         </f:facet>
                     </p:cellEditor>
 
                 </p:column>
 
+                <p:ajax event="rowEdit" listener="#{varProveedorController.addVariableCheck(variable)}"/>
+
 
                 <p:column headerText="Estatus" style="width:300px;">
                     <h:outputLabel value="#{varProveedorController.getAdminReview(variable).estatus==0? 'No valido' : 'Valido' }"/>
                 </p:column>
+
+
 
                 <p:column headerText="Observación" style="width: 350px; color: red;">
 
@@ -72,43 +76,6 @@
                 </p:column>
 
 
-
-                <f:facet name="footer">
-                    <!--
-                    <div class="row">
-                        <div class="col-lg-4 ">
-                            <div class="pull-left">
-                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="{msg.create}" actionListener="#{variableController.prepareCreate()}" update=":VariablesCreateForm" oncomplete="PF('createVarWi').show();" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
-                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="{msg.view}" update=":VariableViewForm" oncomplete="PF('viewVarWi').show();" disabled="#{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
-                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="{msg.edit}" update=":VariableEditForm" oncomplete="PF('editVarWi').show();" disabled="#{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
-                                <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="{msg.delete}" actionListener="#{variableController.deleteItem()}" update="growl,varDataList" 
-                                                 disabled="{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();">
-                                    <p:confirm header="Información General" message="Desea eliminar este registro? " icon="fa fa-warning"/>
-                                </p:commandButton>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-offset-6 col-lg-2">
-                            <div class="pull-right">
-                                <h:commandLink>
-                                    <p:graphicImage library="images" name="excel.png" width="24"/>
-                                    <p:dataExporter type="xls" target="varDataList" fileName="SIIPG-Variables" />
-                                </h:commandLink>
-
-                                <h:commandLink>
-                                    <p:graphicImage library="images" name="pdf_1.png" width="24"/>
-                                    <p:dataExporter type="pdf" target="varDataList" fileName="SIIPG-Variables"/>
-                                </h:commandLink>
-
-                                <h:commandLink>
-                                    <p:graphicImage library="images" name="xml.png" width="24"/>
-                                    <p:dataExporter type="xml" target="varDataList" fileName="SIIPG-Variables" />
-                                </h:commandLink>
-                            </div>
-                        </div>
-                    </div>
-                    -->
-                </f:facet>
 
             </p:dataTable>
             Nota :* El valor de sus variables será asignado al ultimo periodo escolar creado por su administrador.

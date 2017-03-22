@@ -25,7 +25,7 @@ public class MenuController implements Serializable {
 
     public MenuController() {
         this.pageName = "index";
-        this.pageLink = "login";
+        this.pageLink = "welcome";
 
     }
 
