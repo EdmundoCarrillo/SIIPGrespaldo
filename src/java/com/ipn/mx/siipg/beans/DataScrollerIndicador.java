@@ -6,24 +6,18 @@
 package com.ipn.mx.siipg.beans;
 
 
-import com.ipn.mx.siipg.dao.FormatoDao;
+
 import com.ipn.mx.siipg.dao.util.JsfUtil;
 import com.ipn.mx.siipg.impl.EjeTematicoDaoImpl;
-import com.ipn.mx.siipg.impl.FormatoDaoImpl;
-
 import com.ipn.mx.siipg.modelo.Indicador;
 import com.ipn.mx.siipg.modelo.IndicadorTienePeriodo;
-import com.ipn.mx.siipg.modelo.Periodo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedProperty;
 import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -40,7 +34,7 @@ import org.primefaces.model.chart.PieChartModel;
  *
  * @author deo
  */
-//@ManagedBean(name = "dataScrollerIndicador")
+
 @Named
 @SessionScoped
 public class DataScrollerIndicador implements Serializable{
@@ -109,9 +103,6 @@ public class DataScrollerIndicador implements Serializable{
             temp.put(indicador.getId(), listperiodo);
             
             }
-            else{
-                System.out.println("on hay periodos");
-            }
         }
         
     }
@@ -133,23 +124,22 @@ public class DataScrollerIndicador implements Serializable{
             l =temp.get(f);
             if(l != null){
         switch(i){
-            case 1:
-                
-                
+            case 1:           
                 LineChartModel areaModel = new LineChartModel();
-                for (IndicadorTienePeriodo indicadorTienePeriodo : l) {
-                    LineChartSeries te3 = new LineChartSeries();
-                    
-                    String p = indicadorTienePeriodo.getPeriodo().getPeriodo();
-                    te3.setLabel(p);
-                    te3.set(p, indicadorTienePeriodo.getResultado()*100.0);
-                    te3.setFill(true);
-                    areaModel.addSeries(te3);
+                LineChartSeries te3 = new LineChartSeries();
+                te3.setFill(true);
+                String p = l.get(0).getIndicador().getNombre();
+                te3.setLabel(p);
+                for (IndicadorTienePeriodo indicadorTienePeriodo : l) {                 
+                    te3.set(indicadorTienePeriodo.getPeriodo().getPeriodo(),(int)(indicadorTienePeriodo.getResultado()*100));
+   
                 }
-                areaModel.setTitle(l.get(0).getIndicador().getNombre());
+                areaModel.addSeries(te3);
+                areaModel.setTitle(p);
                 areaModel.setLegendPosition("ne");
                 areaModel.setStacked(true);
                 areaModel.setShowPointLabels(true);
+                areaModel.setAnimate(true);
                 Axis xAxis1 = new CategoryAxis("Periodos");
                 areaModel.getAxes().put(AxisType.X, xAxis1);
                 Axis yAxis1 = areaModel.getAxis(AxisType.Y);
@@ -160,18 +150,18 @@ public class DataScrollerIndicador implements Serializable{
                 break;
             case 2:
                 LineChartModel lineModel = new LineChartModel();
-                
-                 for (IndicadorTienePeriodo indicadorTienePeriodo : l) {
-                    LineChartSeries ser = new LineChartSeries();
-                    String per =indicadorTienePeriodo.getPeriodo().getPeriodo();
+                    ChartSeries ser = new ChartSeries();
+                    String per =l.get(0).getIndicador().getNombre();
                     ser.setLabel(per);
-                    
-                    ser.set(per,indicadorTienePeriodo.getResultado() * 100.0);
-                    lineModel.addSeries(ser);
+                 for (IndicadorTienePeriodo indicadorTienePeriodo : l) {
+                    ser.setLabel(per);
+                    ser.set(indicadorTienePeriodo.getPeriodo().getPeriodo(),(int)(indicadorTienePeriodo.getResultado() * 100));
                  }
-                lineModel.setTitle(l.get(0).getIndicador().getNombre());
+                lineModel.addSeries(ser);
+                lineModel.setTitle(per);
                 lineModel.setLegendPosition("e");
                 lineModel.setShowPointLabels(true);
+                lineModel.setAnimate(true);              
                 lineModel.getAxes().put(AxisType.X, new CategoryAxis("Periodos"));
                 yAxis = lineModel.getAxis(AxisType.Y);
                 yAxis.setLabel("Porcentajes");
@@ -189,28 +179,22 @@ public class DataScrollerIndicador implements Serializable{
                 data = pieModel;
                 break;
             default:
-                
-               
+ 
                 BarChartModel barModel=  new BarChartModel();
-            for (IndicadorTienePeriodo indicadorTienePeriodo : l) {
-                
-                 ChartSeries tem12 = new BarChartSeries();
-                 String lab = indicadorTienePeriodo.getPeriodo().getPeriodo();
+                ChartSeries tem12 = new BarChartSeries();
+                String lab = l.get(0).getIndicador().getNombre();
                  tem12.setLabel(lab);
-                 tem12.set(lab, indicadorTienePeriodo.getResultado() * 100);
-                 barModel.addSeries(tem12);
+            for (IndicadorTienePeriodo indicadorTienePeriodo : l) {         
+                 tem12.set(indicadorTienePeriodo.getPeriodo().getPeriodo(), indicadorTienePeriodo.getResultado() * 100);              
             }
-            barModel.setTitle(l.get(0).getIndicador().getNombre());
-            barModel.setLegendPosition("ne");
-         
+            barModel.addSeries(tem12);
+            barModel.setTitle(lab);
+            barModel.setLegendPosition("ne");  
             xAxis = barModel.getAxis(AxisType.X);
-            xAxis.setLabel("Periodos");
-         
+            xAxis.setLabel("Periodos");      
             yAxis = barModel.getAxis(AxisType.Y);
             yAxis.setLabel("Porcentajes");
-            data = barModel;
-                
-                
+            data = barModel;          
         }
             }
             else{
