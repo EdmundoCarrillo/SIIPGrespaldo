@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link href="resources/css/siipg.css" rel="stylesheet" type="text/css"/> 
+        <title>Periodo</title>
+    </h:head>
+     <style>
+        .ui-growl {   
+            position:fixed;
+            top: 12%;
+        }
+
+    </style>
+    <h:body>
+        <div class="col-lg-12 hidden-sm hidden-xs" style="background-color: #3c8dbc;height: 50px">
+            <div class="col-lg-12 hidden-sm hidden-xs" style="top:10px">
+                
+                <center><p id="UPTitulo2">Administración de periodo</p> </center>
+            </div>   
+        </div>
+        <h:form>
+        <div class="row">
+            <div class="col-lg-12" style="top: 10px">
+                <center><p id="UPTitulo">Periodos correspondiente del año #{periodoController.anio}</p>  </center>
+            </div>
+        </div>
+            
+         <div class="row" id="tablaperiodos">
+            <div  class="col-lg-12 hidden-sm hidden-xs"  style="top: 70px"  >
+           
+                <p:dataScroller id="tablaind" value="#{periodoController.admintrator}" var="periodo" chunkSize="10" mode="inline"  >
+                    <f:facet name="header">
+                        Periodos
+                    </f:facet>
+                   
+                <p:outputPanel> 
+                    <h:panelGrid columns="2" cellpadding="5">
+                    
+                    <h:outputText value="Periodo:" />
+                    <h:outputText value="#{periodo.periodo}" style="font-weight: bold"/>
+                         
+                    <h:outputText value="Id:" />
+                    <h:outputText value="#{periodo.id}" style="font-weight: bold"/>
+ 
+                    <h:outputText value="Estatus:" />
+                    <h:outputText value="#{periodo.estatus==1? 'Vigente':'No vigente' }" style="font-weight: bold"/>
+                    <h:outputText value="Habilitar:" />
+                    <p:commandButton value="Habilitar periodo" type="button" />
+                    
+                    </h:panelGrid>
+                </p:outputPanel>
+                    
+                       
+                        
+                    
+                </p:dataScroller>
+            
+            
+            </div>  
+         </div> 
+            
+       </h:form> 
+    </h:body>
+</html>

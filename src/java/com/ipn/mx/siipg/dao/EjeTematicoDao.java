@@ -6,6 +6,7 @@
 package com.ipn.mx.siipg.dao;
 
 import com.ipn.mx.siipg.modelo.Ejetematico;
+import com.ipn.mx.siipg.modelo.Indicador;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ public interface EjeTematicoDao {
     public void updateEjeTematico(Ejetematico ejeTematico);
 
     public void deleteEjeTematico(Ejetematico ejeTematico);
+    
+    public List<Indicador> check(String indice);
 
 
 

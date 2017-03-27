@@ -89,7 +89,7 @@
                      <br/>
                      
  
-                     <p:commandButton id="createprocess"  value="Crear Usuario" actionListener="#{userController.createItem()}" update="growl" disabled="#{userController.enableCreate}" />
+                     <p:commandButton id="createprocess"  value="Crear Usuario" actionListener="#{userController.createItem()}" update="growl,:UsersListForm:usersTable" disabled="#{userController.enableCreate}" />
                    
                     <p:commandButton value="Cancelar" type="button" onclick="PF('createUserWI').hide();" />
                     

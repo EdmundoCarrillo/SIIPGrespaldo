@@ -89,7 +89,8 @@ public class EjeTematicoDaoImpl implements EjeTematicoDao {
             session.close();
         }
     }
-     public List<Indicador> check(String indice) {
+    @Override
+    public List<Indicador> check(String indice) {
         Ejetematico us = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         String stringQuery = "from Indicador where ejeTematico_id ='" + indice + "'";

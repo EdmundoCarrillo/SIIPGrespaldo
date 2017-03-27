@@ -7,11 +7,13 @@ package com.ipn.mx.siipg.beans;
 
 
 
+import com.ipn.mx.siipg.dao.EjeTematicoDao;
 import com.ipn.mx.siipg.dao.util.JsfUtil;
 import com.ipn.mx.siipg.impl.EjeTematicoDaoImpl;
 import com.ipn.mx.siipg.modelo.Indicador;
 import com.ipn.mx.siipg.modelo.IndicadorTienePeriodo;
 import java.io.Serializable;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,8 +85,9 @@ public class DataScrollerIndicador implements Serializable{
     
     public void generaindicador(){
         temp = new HashMap<>();
-        EjeTematicoDaoImpl temp1 = new EjeTematicoDaoImpl();
-        list = temp1.check(index);
+        EjeTematicoDao temp1 = new EjeTematicoDaoImpl();
+        this.list = new ArrayList<>();
+        List<Indicador> list = temp1.check(index);
         
         List<IndicadorTienePeriodo> listperiodo;
         for (Indicador indicador : list) {
@@ -101,7 +104,7 @@ public class DataScrollerIndicador implements Serializable{
                 }
             }
             temp.put(indicador.getId(), listperiodo);
-            
+            this.list.add(indicador);
             }
         }
         

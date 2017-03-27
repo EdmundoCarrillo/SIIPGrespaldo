@@ -7,6 +7,8 @@ package com.ipn.mx.siipg.impl;
 
 import com.ipn.mx.siipg.dao.PeriodoDao;
 import com.ipn.mx.siipg.modelo.Periodo;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -106,9 +108,10 @@ public class PeriodoDaoImpl implements PeriodoDao {
         return periodo;
     }
 
-//    public static void main(String[] args) {
-//        PeriodoDao periodoDao = new PeriodoDaoImpl();
-//        Periodo periodo = periodoDao.periodoByMAXID();
-//        System.out.println(periodo.getId());
-//    }
+    /*public static void main(String[] args) {
+        Calendar p = new GregorianCalendar();
+        int ano = p.get(Calendar.YEAR);
+          System.out.println("anño"+ano);
+          System.out.println(p);
+    }*/
 }

@@ -107,7 +107,6 @@ public class UserController implements Serializable {
 
     public void setCurrent(Usuario current) {
         this.current = current;
-        System.out.println("se establece el usuario");
     }
 
     public void Editable() {
@@ -194,8 +193,8 @@ public class UserController implements Serializable {
             System.out.println(e);
         }
         RequestContext context = RequestContext.getCurrentInstance();
-        context.update(":UsersListForm:usersTable");
         context.execute("PF('createUserWI').hide();");
+        JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("Usuarios.create"));
         selected = new Usuario(new UsuarioId(), null, null, " ", 0, "", "", "", "", "");
 
     }
@@ -209,7 +208,7 @@ public class UserController implements Serializable {
         current.setUnidadresponsable(unidad);
         current.setRol(rol);
         usuarioDao.updateUser(current);
-        addMessage(ResourceBundle.getBundle("Bundle").getString("Usuarios.update"));
+        JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("Usuarios.update"));
     }
 
     public void deleteItem() {
@@ -241,18 +240,5 @@ public class UserController implements Serializable {
 
     public String getSelectedArea() {
         return selectedArea;
-    }
-
-    public void prueba() {
-        System.out.println("unida vale - " + selectedArea + "  " + selectedUnidad);
-        System.out.println(selected.getNombre() + " " + selected.getApellidoPaterno());
-        System.out.println("------------------------------------------------------------- ");
-        //JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("Usuarios.update"));
-
-    }
-
-    public void addMessage(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }
