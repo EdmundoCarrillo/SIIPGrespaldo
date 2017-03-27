@@ -9,4 +9,10 @@
             <var>msg</var>
         </resource-bundle>
     </application>
+    
+    <factory>
+        <exception-handler-factory>
+            com.ipn.mx.siipg.filters.CustomExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
 </faces-config>

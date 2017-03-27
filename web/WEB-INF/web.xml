@@ -2,7 +2,7 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     
     
-    <filter>
+<!--    <filter>
         <filter-name>AuthorizationFilterAdmin</filter-name>
         <filter-class>com.ipn.mx.siipg.filters.AuthorizationFilterAdmin</filter-class>
     </filter>
@@ -18,7 +18,7 @@
     
     
     
-    
+    -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -45,4 +45,10 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>omega</param-value>
     </context-param>
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404.xhtml</location>
+    </error-page>
+    
 </web-app>
