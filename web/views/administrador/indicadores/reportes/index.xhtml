@@ -83,16 +83,17 @@ and open the template in the editor.
                         Indicadores  #{dataScrollerIndicador.list.size()}
                     </f:facet>
                     <f:facet name="loader">
-            <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-        </f:facet>
-                <p:outputPanel>
-                    <h3>Indicador #{indicador.id}.- #{indicador.nombre} </h3>           
-                </p:outputPanel>
-                    
-                        <h:panelGrid columns="2" cellspacing="10" cellpadding="20">
-                            <p:dataTable value="#{dataScrollerIndicador.getPeriodos(indicador.id)}" var="periodos"
-                                     style="text-align: left; border-collapse: collapse; margin-bottom: 20px; width: 400px">
-                                     
+                        <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                    </f:facet>
+                    <p:outputPanel>
+                        <h3>Indicador #{indicador.id}.- #{indicador.nombre} </h3>
+                        <input type="hidden" value="#{indicador.nombre}" name="indicatorName" id="indicatorName"/>
+                        <input type="hidden" value="#{indicador.id}" name="indicatorId" id="indicatorId"/>
+                    </p:outputPanel>
+                    <h:panelGrid columns="2" cellspacing="10" cellpadding="20">
+                        <p:dataTable value="#{dataScrollerIndicador.getPeriodos(indicador.id)}" var="periodos"
+                                 style="text-align: left; border-collapse: collapse; margin-bottom: 20px; width: 400px">
+
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Periodo"/>
@@ -105,20 +106,33 @@ and open the template in the editor.
                                 </f:facet>
                                 <h:outputText value="#{periodos.resultado * 100}" style="text-align: center"/>
                             </p:column>         
-                    </p:dataTable>
-                                  
-                            <p:chart type="#{dataScrollerIndicador.getformat(indicador.formato.formato)}" model="#{dataScrollerIndicador.data(indicador.formato.formato, indicador.id)}" style="width: 700px"/>
+                        </p:dataTable>
+
+                        <p:chart  type="#{dataScrollerIndicador.getformat(indicador.formato.formato)}" widgetVar="image_#{indicador.id}" model="#{dataScrollerIndicador.data(indicador.formato.formato, indicador.id)}" class="imageToBeExported-#{indicador.id}" style="width: 700px"/>
+                        <p:button id="generateReport" value="  Generar Reporte  " onclick="GenerarReporte(#{indicador.id}, '#{indicador.nombre}'); return false;">
+                            
+                        </p:button>
+                        <form action="#{administrarGraficaController.getReportServerUrl()}" name="reportForm" method="POST">
+                            <input type="hidden" name="id" value="" />
+                            <input type="hidden" name="name" value="" />
+                            <input type="hidden" name="image" value=""/>
+                        </form>
                     </h:panelGrid>
-                        
-                    
                 </p:dataScroller>
             
             
             </div>  
 </div>  
-
-        
-        
-        
-    </h:form>>
+    </h:form>
+    <script>
+        function GenerarReporte(id, name) {                
+            console.log(id, name);
+            var image = PF("image_" + id).exportAsImage();
+            console.log(image.src);
+            $("input[name='image']").val(image.src);
+            $("input[name='id']").val(id);
+            $("input[name='name']").val(name);
+            $("form[name='reportForm']").submit();
+        }
+    </script>
 </html>
