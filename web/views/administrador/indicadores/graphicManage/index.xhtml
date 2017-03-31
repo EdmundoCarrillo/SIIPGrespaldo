@@ -111,34 +111,10 @@
                     <div class="col-lg-8" />                    
                     <div >
                         <p:commandButton id="accept" update="growl" value="  Aceptar  " actionListener="#{administrarGraficaController.generateFormat()}"  />
-                        <p:button id="generateReport" value="  Generar Reporte  " onclick="GenerarReporte(); return false;">
-                            
-                        </p:button>
                     </div>                
                 </div>
         </h:form>    
         </div>
-        <form action="#{administrarGraficaController.getReportServerUrl()}" name="reportForm" method="POST">
-            <input type="hidden" name="id" value="" />
-            <input type="hidden" name="image" value=""/>
-        </form>
-        <script>
-            function GenerarReporte() {                
-                var currentImage = document.getElementById("graficasimg");                
-                $("input[name='image']").val(getBase64Image(currentImage));
-                $("input[name='id']").val("1");                
-                $("form[name='reportForm']").submit();
-            }
-            function getBase64Image(img) {                
-                var canvas = document.createElement("canvas");
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;                
-                var ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0);
-                var dataURL = canvas.toDataURL("image/png");
-                return dataURL;
-            }
-        </script>
     </h:body>
 </html>
 
