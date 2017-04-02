@@ -119,9 +119,16 @@ and open the template in the editor.
             
             </div>  
 </div>  
-
-        
-        
-        
-    </h:form>>
+    </h:form>
+    <script>
+        function GenerarReporte(id, name) {                
+            console.log(id, name);
+            var image = PF("image_" + id).exportAsImage();
+            console.log(image.src);
+            $("input[name='image']").val(image.src);
+            $("input[name='id']").val(id);
+            $("input[name='name']").val(name);
+            $("form[name='reportForm']").submit();
+        }
+    </script>
 </html>
