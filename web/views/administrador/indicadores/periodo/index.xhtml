@@ -31,21 +31,22 @@ and open the template in the editor.
         </div>
         <h:form>
         <div class="row">
-            <div class="col-lg-12" style="top: 10px">
+            <div class="col-lg-12" style="top: 5px">
                 <center><p id="UPTitulo">Periodos correspondiente del año #{periodoController.anio}</p>  </center>
             </div>
         </div>
             
          <div class="row" id="tablaperiodos">
-            <div  class="col-lg-12 hidden-sm hidden-xs"  style="top: 70px"  >
-           
-                <p:dataScroller id="tablaind" value="#{periodoController.admintrator}" var="periodo" chunkSize="10" mode="inline"  >
+             
+            <div  class="col-lg-12 hidden-sm hidden-xs"  style="left: 730px;width: 205px"  >
+                
+                <p:dataScroller id="tablaind" value="#{periodoController.admintrator}" var="periodo" chunkSize="20" mode="inline" style="content: inherit"  >
                     <f:facet name="header">
                         Periodos
                     </f:facet>
                    
-                <p:outputPanel> 
-                    <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputPanel> 
+                    <h:panelGrid columns="2" cellpadding="15">
                     
                     <h:outputText value="Periodo:" />
                     <h:outputText value="#{periodo.periodo}" style="font-weight: bold"/>
@@ -55,21 +56,19 @@ and open the template in the editor.
  
                     <h:outputText value="Estatus:" />
                     <h:outputText value="#{periodo.estatus==1? 'Vigente':'No vigente' }" style="font-weight: bold"/>
-                    <h:outputText value="Habilitar:" />
-                    <p:commandButton value="Habilitar periodo" type="button" />
+                    
+                    
                     
                     </h:panelGrid>
-                </p:outputPanel>
-                    
-                       
-                        
-                    
+                        <p:commandButton  actionListener="#{periodoController.valida(periodo.id)}" value="Habilitar periodo"  disabled="#{periodo.estatus == 1? true:false }"  update="growl" />
+                </p:outputPanel>    
                 </p:dataScroller>
             
             
             </div>  
+                
          </div> 
-            
+             
        </h:form> 
     </h:body>
 </html>

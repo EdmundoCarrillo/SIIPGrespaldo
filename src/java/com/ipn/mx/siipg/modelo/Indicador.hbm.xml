@@ -25,6 +25,9 @@
         <property name="estatus" type="int">
             <column name="estatus" not-null="true" />
         </property>
+        <property name="comentariog" type="string">
+            <column name="comentariog" length="300" not-null="false" />
+        </property>
         <one-to-one name="formato" class="com.ipn.mx.siipg.modelo.Formato"></one-to-one>
         <set name="indicadorTienePeriodos" table="indicador_tiene_periodo" inverse="true" lazy="true" fetch="select">
             <key>

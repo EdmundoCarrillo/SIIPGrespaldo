@@ -78,7 +78,7 @@ and open the template in the editor.
         <div class="row" id="tablain">
             <div  class="col-lg-12 hidden-sm hidden-xs"  style="top: 70px"  >
            
-                <p:dataScroller id="tablaind" value="#{dataScrollerIndicador.list}" var="indicador" chunkSize="10" >
+                <p:dataScroller id="tablaind" value="#{dataScrollerIndicador.list}" var="indicador" chunkSize="10"  >
                     <f:facet name="header">
                         Indicadores  #{dataScrollerIndicador.list.size()}
                     </f:facet>
@@ -89,7 +89,7 @@ and open the template in the editor.
                     <h3>Indicador #{indicador.id}.- #{indicador.nombre} </h3>           
                 </p:outputPanel>
                     
-                        <h:panelGrid columns="2" cellspacing="10" cellpadding="20">
+                        <h:panelGrid columns="3" cellspacing="10" cellpadding="20">
                             <p:dataTable value="#{dataScrollerIndicador.getPeriodos(indicador.id)}" var="periodos"
                                      style="text-align: left; border-collapse: collapse; margin-bottom: 20px; width: 400px">
                                      
@@ -105,10 +105,13 @@ and open the template in the editor.
                                 </f:facet>
                                 <h:outputText value="#{periodos.resultado * 100}" style="text-align: center"/>
                             </p:column>         
-                    </p:dataTable>
-                                  
-                            <p:chart type="#{dataScrollerIndicador.getformat(indicador.formato.formato)}" model="#{dataScrollerIndicador.data(indicador.formato.formato, indicador.id)}" style="width: 700px"/>
+                        </p:dataTable>          
+                        <p:chart type="#{dataScrollerIndicador.getformat(indicador.formato.formato)}" model="#{dataScrollerIndicador.data(indicador.formato.formato, indicador.id)}" style="width: 700px"/>
+                        <h:inputTextarea  value="#{indicador.comentariog}" style="height: 220px; width: 400px">
+                            <p:ajax event="blur" listener="#{dataScrollerIndicador.actualiza(indicador)}" update="growl" />
+                        </h:inputTextarea>
                     </h:panelGrid>
+                    
                         
                     
                 </p:dataScroller>

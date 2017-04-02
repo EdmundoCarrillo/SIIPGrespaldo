@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -23,7 +22,6 @@ import javax.inject.Named;
  *
  * @author deo
  */
-//@ManagedBean(name = "periodoController")
 @Named
 @SessionScoped
 public class PeriodoController implements Serializable{
@@ -40,27 +38,62 @@ public class PeriodoController implements Serializable{
     admintrator = new ArrayList<>();
     Anio = date.get(Calendar.YEAR);
     periodos = getPeriodos();
-    if(verifi(periodos, Integer.toString(Anio))){
+    }
+    
+    public void valida(int id){
+        Periodo tem = null;
+        for(Periodo per: admintrator){
+            if(per.getId() == id){
+                tem=per;
+                break;
+            }
+        }
+        
+        int mont = date.get(Calendar.MONTH);
+        if(tem.getPeriodo().equals(Integer.toString(Anio))){
+            
+            if(tem.getEstatus()== 0){
+            if(mont >= Calendar.FEBRUARY && mont <= Calendar.JUNE ){
+                PeriodoDao pdao = new PeriodoDaoImpl();
+                tem.setEstatus(1);
+                pdao.updatePeriodo(tem);
+                JsfUtil.addSuccessMessage("El periodo "+Anio+" fue habilitado exitosamente");
+            }}
+        }else{
+           if(tem.getEstatus()== 0){
+            if(mont >= Calendar.JULY && mont <= Calendar.DECEMBER){
+                PeriodoDao pdao = new PeriodoDaoImpl();
+                tem.setEstatus(1);
+                pdao.updatePeriodo(tem);
+                JsfUtil.addSuccessMessage("El periodo "+Anio+"-2 fue habilitado exitosamente");
+            
+           }else{
+              JsfUtil.addSuccessMessage("Aun no es tiempo para habilitar el periodo"); }
+            }
+        }
+    }
+    public void genera(int Anio){
+        admintrator = new ArrayList<>();
+        if(verifi(periodos, Integer.toString(Anio))){
         int i = periodos.size();
-        admintrator.add(periodos.get(i-1));
         admintrator.add(periodos.get(i-2));
+        admintrator.add(periodos.get(i-1));
     }else{
         String dat = Integer.toString(Anio);
         PeriodoDao pdao = new PeriodoDaoImpl();
         Periodo tem1 = new Periodo();
         tem1.setPeriodo(dat);
-        tem1.setEstatus(1);
+        tem1.setEstatus(0);
         pdao.newPeriodo(tem1);
         tem1.setPeriodo(dat+"-2");
-        tem1.setEstatus(1);
+        tem1.setEstatus(0);
         pdao.newPeriodo(tem1);
         periodos = getPeriodos();
         int i = periodos.size();
-        admintrator.add(periodos.get(i-1));
         admintrator.add(periodos.get(i-2));
+        admintrator.add(periodos.get(i-1));
     }
     }
-
     public void setAnio(int Anio) {
         this.Anio = Anio;
     }
@@ -70,15 +103,13 @@ public class PeriodoController implements Serializable{
     }
 
     public List<Periodo> getAdmintrator() {
+        genera(Anio);
         return admintrator;
     }
 
     public void setAdmintrator(List<Periodo> admintrator) {
         this.admintrator = admintrator;
     }
-    
-    
-    
 
     public List<Periodo> getPeriodos() {
         PeriodoDao temp = new PeriodoDaoImpl();

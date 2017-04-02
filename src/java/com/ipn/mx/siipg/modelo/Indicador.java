@@ -10,7 +10,8 @@ public class Indicador implements java.io.Serializable {
     private String nombre;
     private String rutaPdf;
     private int estatus;
-    private Formato formato;    
+    private Formato formato;
+    private String comentariog;
     private Set indicadorTienePeriodos = new HashSet(0);
 
     public Indicador() {
@@ -54,6 +55,14 @@ public class Indicador implements java.io.Serializable {
 
     public void setEstatus(int estatus) {
         this.estatus = estatus;
+    }
+
+    public String getComentariog() {
+        return comentariog;
+    }
+
+    public void setComentariog(String comentariog) {
+        this.comentariog = comentariog;
     }
     
     public Formato getFormato() {

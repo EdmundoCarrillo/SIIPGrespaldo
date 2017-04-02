@@ -8,8 +8,10 @@ package com.ipn.mx.siipg.beans;
 
 
 import com.ipn.mx.siipg.dao.EjeTematicoDao;
+import com.ipn.mx.siipg.dao.IndicadorDao;
 import com.ipn.mx.siipg.dao.util.JsfUtil;
 import com.ipn.mx.siipg.impl.EjeTematicoDaoImpl;
+import com.ipn.mx.siipg.impl.IndicadorDaoImpl;
 import com.ipn.mx.siipg.modelo.Indicador;
 import com.ipn.mx.siipg.modelo.IndicadorTienePeriodo;
 import java.io.Serializable;
@@ -47,8 +49,6 @@ public class DataScrollerIndicador implements Serializable{
     private boolean procesa = false;
     private String index;
     private Map<Integer,List<IndicadorTienePeriodo>> temp = null;
-
-    
 
     public String getIndex() {
         return index;
@@ -241,14 +241,18 @@ public class DataScrollerIndicador implements Serializable{
         }
         else{
             procesa = false;
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("periodo.error"));
+            JsfUtil.addErrorMessage(ResourceBundle.getBundle("Bundle").getString("periodo.error"));
         }
     }
     
-    public String getformat(Integer i){
-        
-        String resp = tipos[i];
-        return resp;
+    public String getformat(Integer i){   
+        return tipos[i];
+    }
+    
+    public void actualiza(Indicador indicador){
+        IndicadorDao tem = new IndicadorDaoImpl();
+        tem.updateIndicador(indicador);
+        JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("indicador.comentario"));
     }
     
 
