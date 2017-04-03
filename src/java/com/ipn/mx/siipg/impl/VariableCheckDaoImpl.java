@@ -164,21 +164,23 @@ public class VariableCheckDaoImpl implements VariableCheckDao {
 //        Variablecheck check = varDao.checkByExistingVar(variable);
 //        System.out.println(check.getId());
 //    }
-    public static void main(String[] args) {
-        VariableCheckDao checkDao = new VariableCheckDaoImpl();
-        Variablecheck check = new Variablecheck();
-        Periodo periodo = new Periodo();
-        periodo.setId(4);
-        Variable variable = new Variable();
-        variable.setId(7);
-
-        check.setId(15);
-        check.setComentario("from hibernate 1we");
-        check.setEstatus(1);
-        check.setValor(85.2f);
-        check.setVariable(variable);
-        check.setPeriodo(periodo);
-
-        checkDao.newVariableCheck(check);
-    }
+    
+    
+//    public static void main(String[] args) {
+//        VariableCheckDao checkDao = new VariableCheckDaoImpl();
+//        Variablecheck check = new Variablecheck();
+//        Periodo periodo = new Periodo();
+//        periodo.setId(4);
+//        Variable variable = new Variable();
+//        variable.setId(7);
+//
+//        check.setId(15);
+//        check.setComentario("from hibernate 1we");
+//        check.setEstatus(1);
+//        check.setValor(85.2f);
+//        check.setVariable(variable);
+//        check.setPeriodo(periodo);
+//
+//        checkDao.newVariableCheck(check);
+//    }
 }

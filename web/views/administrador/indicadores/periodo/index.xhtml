@@ -15,7 +15,7 @@ and open the template in the editor.
         <link href="resources/css/siipg.css" rel="stylesheet" type="text/css"/> 
         <title>Periodo</title>
     </h:head>
-     <style>
+    <style>
         .ui-growl {   
             position:fixed;
             top: 12%;
@@ -25,50 +25,74 @@ and open the template in the editor.
     <h:body>
         <div class="col-lg-12 hidden-sm hidden-xs" style="background-color: #3c8dbc;height: 50px">
             <div class="col-lg-12 hidden-sm hidden-xs" style="top:10px">
-                
-                <center><p id="UPTitulo2">Administración de periodo</p> </center>
+
+                <center><p id="UPTitulo2">Administración de periodos</p> </center>
             </div>   
         </div>
-        <h:form>
-        <div class="row">
-            <div class="col-lg-12" style="top: 5px">
-                <center><p id="UPTitulo">Periodos correspondiente del año #{periodoController.anio}</p>  </center>
-            </div>
+        <div class="container">
+            <h:form id="formPeriodo">
+                <div class="row">
+                    <div class="col-lg-12" style="top: 5px">
+                        <center><p id="UPTitulo">Periodos correspondientes del año #{periodoController.anio}</p>  </center>
+                    </div>
+                </div>
+
+                <div class="row" id="tablaperiodos">
+
+                    <div  class="col-lg-2 col-lg-offset-5" >
+
+                        <p:dataScroller id="tablaind" value="#{periodoController.admintrator}" var="periodo" chunkSize="20" mode="inline" style="content: inherit"  >
+                            <f:facet name="header">
+                                Periodos
+                            </f:facet>
+
+                            <p:outputPanel> 
+                                <h:panelGrid columns="2" cellpadding="15">
+
+                                    <h:outputText value="Periodo:" />
+                                    <h:outputText value="#{periodo.periodo}" style="font-weight: bold"/>
+
+                                    <h:outputText value="Id:" />
+                                    <h:outputText value="#{periodo.id}" style="font-weight: bold"/>
+
+                                    <h:outputText value="Estatus:" />
+                                    <h:outputText value="#{periodo.estatus==1? 'Vigente':'No vigente' }" style="font-weight: bold"/>
+
+                                </h:panelGrid>
+                                <p:commandButton  actionListener="#{periodoController.valida(periodo.id)}" value="Habilitar periodo"  disabled="#{periodo.estatus == 1? true:false }"  update="growl" />
+                            </p:outputPanel>    
+                        </p:dataScroller>
+
+
+                    </div>  
+
+                    <div class="col-lg-5"></div>
+
+                </div> 
+                <br/>
+                <br/>
+                <br/>
+
+                <div class="row">
+                    <div class="container" >
+
+                        <div class="col-lg-4">
+                            <p:commandButton  actionListener="#{mostrarViewProveedorController.vistaProveedorEnable()}" value="Habilitar vista para del proveedor"    update="growl"  styleClass="btn"/>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <center><h1><p:outputLabel id="rutaEstatus" value="#{mostrarViewProveedorController.rutaEstatus=='views/proveedor/variables/invalidIndex'? 'Deshabilitada' : 'Habilitada'}"></p:outputLabel></h1></center>  
+                        </div>
+                        <div class="col-lg-4" >
+                            <p:commandButton  actionListener="#{mostrarViewProveedorController.vistaProveedorDisable()}" value="Deshabilitar vista para del proveedor"    update="growl" styleClass="btn" style="background-color: red;" />
+                        </div>
+                    </div>
+                </div>
+            </h:form> 
+
         </div>
-            
-         <div class="row" id="tablaperiodos">
-             
-            <div  class="col-lg-12 hidden-sm hidden-xs"  style="left: 730px;width: 205px"  >
-                
-                <p:dataScroller id="tablaind" value="#{periodoController.admintrator}" var="periodo" chunkSize="20" mode="inline" style="content: inherit"  >
-                    <f:facet name="header">
-                        Periodos
-                    </f:facet>
-                   
-                    <p:outputPanel> 
-                    <h:panelGrid columns="2" cellpadding="15">
-                    
-                    <h:outputText value="Periodo:" />
-                    <h:outputText value="#{periodo.periodo}" style="font-weight: bold"/>
-                         
-                    <h:outputText value="Id:" />
-                    <h:outputText value="#{periodo.id}" style="font-weight: bold"/>
- 
-                    <h:outputText value="Estatus:" />
-                    <h:outputText value="#{periodo.estatus==1? 'Vigente':'No vigente' }" style="font-weight: bold"/>
-                    
-                    
-                    
-                    </h:panelGrid>
-                        <p:commandButton  actionListener="#{periodoController.valida(periodo.id)}" value="Habilitar periodo"  disabled="#{periodo.estatus == 1? true:false }"  update="growl" />
-                </p:outputPanel>    
-                </p:dataScroller>
-            
-            
-            </div>  
-                
-         </div> 
-             
-       </h:form> 
+        <br/>
+        <br/>
+
     </h:body>
 </html>
