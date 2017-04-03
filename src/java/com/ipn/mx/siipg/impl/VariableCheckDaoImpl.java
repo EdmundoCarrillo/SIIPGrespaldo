@@ -18,6 +18,26 @@ import org.hibernate.Transaction;
 public class VariableCheckDaoImpl implements VariableCheckDao {
 
     @Override
+    public List<Variablecheck> loadAll() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        List ejesList = null;
+        try {
+            tx.begin();
+            ejesList = session.createQuery("from Variablecheck").list();
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
+        return ejesList;
+    }
+
+    @Override
     public List<Variablecheck> loadVarForProveedor() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.getTransaction();
@@ -164,8 +184,6 @@ public class VariableCheckDaoImpl implements VariableCheckDao {
 //        Variablecheck check = varDao.checkByExistingVar(variable);
 //        System.out.println(check.getId());
 //    }
-    
-    
 //    public static void main(String[] args) {
 //        VariableCheckDao checkDao = new VariableCheckDaoImpl();
 //        Variablecheck check = new Variablecheck();
@@ -183,4 +201,22 @@ public class VariableCheckDaoImpl implements VariableCheckDao {
 //
 //        checkDao.newVariableCheck(check);
 //    }
+    public static void main(String[] args) {
+        VariableCheckDao checkDao = new VariableCheckDaoImpl();
+        Variablecheck check = new Variablecheck();
+        Periodo periodo = new Periodo();
+        periodo.setId(4);
+        
+        Variable variable = new Variable();
+        variable.setId(4);
+        
+        check.setId(12);
+        check.setComentario("from hibernate 1we");
+        check.setEstatus(1);
+        check.setValor(85.2f);
+        check.setVariable(variable);
+        check.setPeriodo(periodo);
+
+        checkDao.updateVariableCheck(check);
+    }
 }

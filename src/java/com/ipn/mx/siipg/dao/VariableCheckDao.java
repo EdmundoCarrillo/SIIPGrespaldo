@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface VariableCheckDao {
 
+    public List<Variablecheck> loadAll();
+
     public List<Variablecheck> loadVarForProveedor();
 
     public List<Variablecheck> checkByExistingVar(List<Variable> variableList);
