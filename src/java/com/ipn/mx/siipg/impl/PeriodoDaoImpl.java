@@ -16,7 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class PeriodoDaoImpl implements PeriodoDao {
-    
+
     @Override
     public List<Periodo> loadPeriodos() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -93,19 +93,21 @@ public class PeriodoDaoImpl implements PeriodoDao {
 
     @Override
     public Periodo periodoByMAXID() {
-        Periodo periodo = null;
+        Integer periodo;
+        Periodo periodoObj = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String stringQuery = "From Periodo where id = (select max(id) from Periodo )";
+        String stringQuery = "Select max(periodo.id) From  Periodo as periodo where periodo.estatus=1 ";
         try {
             Query query = session.createQuery(stringQuery);
-            periodo = (Periodo) query.uniqueResult();
-
+            periodo = (Integer) query.uniqueResult();
+            Query query2 = session.createQuery("from Periodo p where p.id=" + periodo + "");
+            periodoObj = (Periodo) query2.uniqueResult();
         } catch (HibernateException ex) {
             System.out.println(ex.toString());
         } finally {
             session.close();
         }
-        return periodo;
+        return periodoObj;
     }
 
     /*public static void main(String[] args) {
@@ -114,4 +116,8 @@ public class PeriodoDaoImpl implements PeriodoDao {
           System.out.println("anño"+ano);
           System.out.println(p);
     }*/
+    public static void main(String[] args) {
+        PeriodoDao pDao = new PeriodoDaoImpl();
+        System.out.println(pDao.periodoByMAXID().getPeriodo());
+    }
 }
