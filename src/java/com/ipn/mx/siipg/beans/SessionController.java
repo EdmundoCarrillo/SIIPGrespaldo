@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.ipn.mx.siipg.dao.util.JsfUtil;
+import com.ipn.mx.siipg.modelo.Unidadresponsable;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.faces.context.ExternalContext;
@@ -87,6 +88,12 @@ public class SessionController implements Serializable {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         Usuario user = (Usuario) context.getSessionMap().get("usuario");
         return user.getUnidadresponsable().getNombre();
+    }
+    
+    public Unidadresponsable getUnidadObjectFromSession() {
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        Usuario user = (Usuario) context.getSessionMap().get("usuario");
+        return user.getUnidadresponsable();
     }
 
     public String getRolFromSession() {

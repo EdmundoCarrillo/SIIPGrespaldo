@@ -6,7 +6,7 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/entidadgeneror</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">rami</property>
+    <property name="hibernate.connection.password">rootpass</property>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <mapping resource="com/ipn/mx/siipg/modelo/Formato.hbm.xml"/>
     <mapping resource="com/ipn/mx/siipg/modelo/Menu.hbm.xml"/>
@@ -22,5 +22,6 @@
     <mapping resource="com/ipn/mx/siipg/modelo/Ejetematico.hbm.xml"/>
     <mapping resource="com/ipn/mx/siipg/modelo/Periodo.hbm.xml"/>
     <mapping resource="com/ipn/mx/siipg/modelo/IndicadorTienePeriodo.hbm.xml"/>
+    <mapping resource="com/ipn/mx/siipg/modelo/Notificacion.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
