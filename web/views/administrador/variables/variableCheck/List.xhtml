@@ -22,14 +22,14 @@
     <h:body style="background-color:whitesmoke;">
 
         <h:form >
-            <p:dataTable value="#{variableController.items}" var="variable" widgetVar="variablesTable" 
+            <p:dataTable value="#{variableCheckController.items}" var="variable" widgetVar="variablesCheckTable" 
                          style="text-align: left; border-collapse: collapse; margin-bottom: 20px;"
                          paginator="true" rows="15"  
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="15,20,25,30" 
                          currentPageReportTemplate="({currentPage} de {totalPages})" 
                          paginatorPosition="bottom"
-                         selectionMode="single" selection="#{variableController.current}"
+                         selectionMode="single" selection="#{variableCheckController.current}"
                          rowKey="#{variable.id}"
                          emptyMessage="No se encontraron coincidencias para la descripción dada."
                          editable="true">
@@ -39,80 +39,64 @@
                     <p:rowEditor/>
                 </p:column>
 
-                <p:column  filterBy="#{variable.nombre}" filterMatchMode="contains" filterStyle="width: 100%;">
+                <p:column  filterBy="#{variable.variable.nombre}" filterMatchMode="contains" filterStyle="width: 100%;">
                     <f:facet name="header">
                         <h:outputText value="Variable"/>
                     </f:facet>
-                    <h:outputText value="#{variable.nombre}"/>
+                    <h:outputText value="#{variable.variable.nombre}"/>
                 </p:column>
 
                 <p:column style="width: 120px;">
                     <f:facet name="header">
                         <h:outputText value="Valor"/>
                     </f:facet>
-                    <h:outputText value="1000"/>
+                    <h:outputText value="#{variable.valor}"/>
                 </p:column>
 
-                <p:column style="width: 120px;">
+                <p:column filterBy="#{variable.estatus}" filterMatchMode="equals" style="width:300px;">
                     <f:facet name="header">
                         <h:outputText value="Estatus"/>
                     </f:facet>
-                    <p:selectBooleanButton id="value1" onLabel="Vigente" offLabel="No vigente" style="width:100px" />
-                </p:column>
-
-                <p:column style="width: 120px; color: red;">
-                    <f:facet name="header">
-                        <h:outputText value="Valido"/>
+                    <f:facet name="filter">
+                        <p:selectOneButton onchange="PF('variablesCheckTable').filter()">
+                            <f:converter converterId="javax.faces.Integer" />
+                            <f:selectItem itemLabel="Todos" itemValue="" />
+                            <f:selectItem itemLabel="No valido" itemValue="0" />
+                            <f:selectItem itemLabel="Valido" itemValue="1" />
+                        </p:selectOneButton>
                     </f:facet>
-                    <p:selectBooleanButton id="value2" onLabel="Valido" offLabel="No valido" style="width:100px" />
+
+                    <p:selectOneRadio value="#{variable.estatus}">
+                        <f:selectItem itemLabel="Valido" itemValue="1" />
+                        <f:selectItem itemLabel="No valido" itemValue="0" />
+                    </p:selectOneRadio>
                 </p:column>
 
                 <p:column headerText="Observación" style="width: 350px; color: red;">
 
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="El total de la matrícula no es correcto favor de revisar y corregir." /></f:facet>
-                        <f:facet name="input"><p:inputText id="modelInput" style="width:100%" /></f:facet>
+                        <f:facet name="output">
+                            <h:outputText value="#{variable.comentario}" />
+                        </f:facet>
+
+                        <f:facet name="input">
+                            <p:inputText id="modelInput" value="#{variableCheckController.comentario}" style="width:100%" />
+                        </f:facet>
                     </p:cellEditor>
-                   
+
                 </p:column>
 
+                <p:ajax event="rowEdit" listener="#{variableCheckController.updateVariableCheck()}"/>
 
+                <p:column  filterBy="#{variable.periodo.periodo}" filterMatchMode="contains" filterStyle="width: 100%;" style="width: 120px;">
+                    <f:facet name="header">
+                        <h:outputText value="Periodo"/>
+                    </f:facet>
+                    <h:outputText value="#{variable.periodo.periodo}"/>
+                </p:column>
 
                 <f:facet name="footer">
-                    <!--
-                    <div class="row">
-                        <div class="col-lg-4 ">
-                            <div class="pull-left">
-                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="{msg.create}" actionListener="#{variableController.prepareCreate()}" update=":VariablesCreateForm" oncomplete="PF('createVarWi').show();" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
-                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="{msg.view}" update=":VariableViewForm" oncomplete="PF('viewVarWi').show();" disabled="#{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
-                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="{msg.edit}" update=":VariableEditForm" oncomplete="PF('editVarWi').show();" disabled="#{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();" />
-                                <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="{msg.delete}" actionListener="#{variableController.deleteItem()}" update="growl,varDataList" 
-                                                 disabled="{empty variableController.current}" onstart="PF('loading').show();" onsuccess="PF('loading').hide();">
-                                    <p:confirm header="Información General" message="Desea eliminar este registro? " icon="fa fa-warning"/>
-                                </p:commandButton>
 
-                            </div>
-                        </div>
-                        <div class="col-lg-offset-6 col-lg-2">
-                            <div class="pull-right">
-                                <h:commandLink>
-                                    <p:graphicImage library="images" name="excel.png" width="24"/>
-                                    <p:dataExporter type="xls" target="varDataList" fileName="SIIPG-Variables" />
-                                </h:commandLink>
-
-                                <h:commandLink>
-                                    <p:graphicImage library="images" name="pdf_1.png" width="24"/>
-                                    <p:dataExporter type="pdf" target="varDataList" fileName="SIIPG-Variables"/>
-                                </h:commandLink>
-
-                                <h:commandLink>
-                                    <p:graphicImage library="images" name="xml.png" width="24"/>
-                                    <p:dataExporter type="xml" target="varDataList" fileName="SIIPG-Variables" />
-                                </h:commandLink>
-                            </div>
-                        </div>
-                    </div>
-                    -->
                 </f:facet>
 
             </p:dataTable>

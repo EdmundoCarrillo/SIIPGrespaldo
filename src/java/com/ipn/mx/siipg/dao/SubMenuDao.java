@@ -16,6 +16,12 @@ public interface SubMenuDao {
 
     public List<Opcionesmenu> loadSubMenus();
 
+    public void vistaProvedorEnable();
+
+    public void vistaProvedorDisable();
+
+    public Opcionesmenu getRutaEstatus();
+
     public void newSubMenu(Opcionesmenu subMenu);
 
     public void updateSubMenu(Opcionesmenu subMenu);
