@@ -2,8 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
         <meta charset="utf-8"/>
@@ -95,13 +96,15 @@
                                         </p>
 
                                     </li>
-                                    <h:form>
+                                    <h:form onsubmit="return false;">
                                         <li class="user-footer">
                                             <div class="pull-left" style="padding: 10px;">
 
-                                                <p:commandButton  value="Perfil" icon="ui-icon-extlink">
-
-                                                </p:commandButton>
+                                                <p:commandButton 
+                                                    id="editProfileLink" 
+                                                    icon="ui-icon-extlink"
+                                                    value="#{msg.edit}"                                                    
+                                                    oncomplete="PF('editProfileWI').show();"/>
                                             </div>
                                             <div class="pull-right" style="padding: 10px;">
 
@@ -113,7 +116,7 @@
                                             </div>
                                         </li>
 
-                                    </h:form>
+                                    </h:form>                                    
                                 </ul>
                             </li>
 
@@ -188,6 +191,64 @@
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
+            <p:dialog id="editProfile" widgetVar="editProfileWI" modal="true"  
+                  closeOnEscape="true"
+                  resizable="false" 
+                  showEffect="explode"
+                  hideEffect="explode"
+                  header="Editar Perfil">                       
+            <h:form id="editProfileForm">
+                <p:growl id="growlEditProfile" life="4500" />"
+                <h:panelGroup id="display">                                        
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Nombre:" style=" color: #0033ff; " />
+                        <p:inputText value="#{usuario.nombre}" required="true" size="50" validatorMessage="El nombre solo debe contener caracteres validos." requiredMessage="El usuario es requerido">
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText>                                    
+
+                        <p:outputLabel value="Apellido Paterno:"   style="color: #0033ff;" />
+                        <p:inputText value="#{usuario.apellidoPaterno}" required="true" size="50" validatorMessage="El apellido solo debe contener caracteres validos." requiredMessage="El apellido paterno es requerido">
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText>
+                        <p:outputLabel value="Apellido Materno:"  style=" color: #0033ff;" />
+                        <p:inputText value="#{usuario.apellidoMaterno}" required="true" size="50" validatorMessage="El apellido solo debe contener caracteres validos." requiredMessage="El apellido materno es requerido" >
+                            <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
+                        </p:inputText>
+                        <p:outputLabel value="RFC/Homoclave: "  style=" color: #0033ff;" />
+                        <h:panelGroup id="prfc">
+                            <p:inputText value="#{usuario.id.rfc}" disabled="true" required="true" validatorMessage="Debe ser alfanumérico" requiredMessage="El RFC es obligatorio" size="30">
+                                <f:validateRegex pattern="[a-zA-Z0-9]+"/>
+                            </p:inputText>
+                            <p:outputLabel id="validarfc" value="#{userController.rfcmsg}"  />
+                        </h:panelGroup>
+                        <p:outputLabel value="Email:"  style="color: #0033ff;" />
+                        <p:inputText value="#{usuario.email}" required="true" size="50" requiredMessage="El email es obligatorio" />
+
+                        <p:outputLabel value="Telefonos:"  style=" color: #0033ff;" />
+                        <p:inputTextarea  value="#{usuario.telefonos}">
+                            <f:validateRegex pattern="[0-9]+"/>
+                        </p:inputTextarea>             
+
+                        <p:outputLabel value="No. Empleado:*"  style=" color: #0033ff;" />
+                        <p:inputText value="#{usuario.numeroEmpleado}" required="true" requiredMessage="El número de empleado es obligatorio" size="50"  />
+
+                        <p:outputLabel value="Password" style="color: #0033ff" />
+                        <p:password value="#{usuario.password}" redisplay="true" id="createp" requiredMessage="Ingrese una contraseña" />
+                        
+                    </p:panelGrid>                   
+                    <br/>
+                    <p:commandButton 
+                        id="updateProfileCommandButton"  
+                        value="Actualizar" 
+                        actionListener="#{sessionController.actualizarPerfil()}"
+                        onstart="PF('loading').show();" 
+                        onsuccess="PF('loading').hide();"
+                        update="growlEditProfile"/>
+                    <p:commandButton value="Cancelar" type="button" onclick="PF('editProfileWI').hide();" />                    
+                </h:panelGroup>                
+            </h:form>
+            </p:dialog>
+            <ui:include src="/confirmation.xhtml"/>  
 
             <footer class="main-footer customFooter">
                 <div class="pull-right hidden-xs">
@@ -196,7 +257,7 @@
                 <!--    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
                     reserved.-->
             </footer>
-        </div>
+        </div>        
         <script src="resources/js/jquery-2.2.3.min.js" type="text/javascript"></script>
         <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="resources/js/app.min.js" type="text/javascript"></script>

@@ -1,4 +1,3 @@
-
 package com.ipn.mx.siipg.beans;
 
 import com.ipn.mx.siipg.dao.UsuarioDao;
@@ -10,10 +9,14 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.ipn.mx.siipg.dao.util.JsfUtil;
+import com.ipn.mx.siipg.dao.util.MailService;
 import com.ipn.mx.siipg.modelo.Unidadresponsable;
 import java.io.IOException;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javax.faces.context.ExternalContext;
+import javax.mail.MessagingException;
+import org.primefaces.context.RequestContext;
 
 @Named
 @SessionScoped
@@ -89,7 +92,7 @@ public class SessionController implements Serializable {
         Usuario user = (Usuario) context.getSessionMap().get("usuario");
         return user.getUnidadresponsable().getNombre();
     }
-    
+
     public Unidadresponsable getUnidadObjectFromSession() {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         Usuario user = (Usuario) context.getSessionMap().get("usuario");
@@ -102,4 +105,39 @@ public class SessionController implements Serializable {
         return user.getRol().getRol();
     }
 
+    public void restaurarContrasena() {
+        String rfc = usuarioId.getRfc();
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
+        MailService mailService = new MailService();
+        if (rfc != null && rfc.trim().length() != 0) {
+            Usuario tempUser = usuarioDao.checkRfc(rfc);
+            String newPassword = "DummyPassword" + new Random().nextInt(99);
+            if (tempUser != null) {
+                tempUser.setPassword(newPassword);
+                usuarioDao.updateUser(tempUser);
+                try {
+                    mailService.sendRecoveryPasswordEmail(tempUser);
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('recoverPasswordWI').hide();");
+                    JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("mail.recovery"));
+                } catch (MessagingException messagingException) {
+                    JsfUtil.addErrorMessage(ResourceBundle.getBundle("Bundle").getString("mail.error"));
+                }
+            }
+        }
+    }
+
+    public void actualizarPerfil() {
+        Usuario sessionUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        String password = sessionUser.getPassword() != null ? sessionUser.getPassword() : this.usuario.getPassword();
+        sessionUser.setPassword(password);
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
+        usuarioDao.updateUser(sessionUser);
+        this.usuario = sessionUser;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('editProfileWI').hide();");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioId", this.usuarioId);
+        JsfUtil.addSuccessMessage(ResourceBundle.getBundle("Bundle").getString("profile.update"));
+    }
 }
