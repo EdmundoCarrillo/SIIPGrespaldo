@@ -112,8 +112,16 @@ and open the template in the editor.
                         </h:inputTextarea>
                     </h:panelGrid>
                     
+                        <p:chart  type="#{dataScrollerIndicador.getformat(indicador.formato.formato)}" widgetVar="image_#{indicador.id}" model="#{dataScrollerIndicador.data(indicador.formato.formato, indicador.id)}" class="imageToBeExported-#{indicador.id}" style="width: 700px"/>
+                        <p:button id="generateReport" value="  Generar Reporte  " onclick="GenerarReporte(#{indicador.id}, '#{indicador.nombre}'); return false;">
                         
-                    
+                        </p:button>
+                        <form action="#{administrarGraficaController.getReportServerUrl()}" name="reportForm" method="POST">
+                            <input type="hidden" name="id" value="" />
+                            <input type="hidden" name="name" value="" />
+                            <input type="hidden" name="image" value=""/>
+                        </form>
+                    </h:panelGrid>
                 </p:dataScroller>
             
             
