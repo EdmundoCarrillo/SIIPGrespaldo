@@ -123,10 +123,10 @@ public class SubMenuDaoImpl implements SubMenuDao {
         return subMenu;
     }
 
-//    public static void main(String[] args) {
-//        SubMenuDao subMenuDao = new SubMenuDaoImpl();
-//        Opcionesmenu subMenu = subMenuDao.getRutaEstatus();
-//        System.out.println(subMenu.getRuta());
-//    }
+    public static void main(String[] args) {
+        SubMenuDao subMenuDao = new SubMenuDaoImpl();
+        Opcionesmenu subMenu = subMenuDao.getRutaEstatus();
+        System.out.println(subMenu.getRuta());
+    }
 
 }

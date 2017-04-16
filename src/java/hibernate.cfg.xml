@@ -22,5 +22,6 @@
     <mapping resource="com/ipn/mx/siipg/modelo/Ejetematico.hbm.xml"/>
     <mapping resource="com/ipn/mx/siipg/modelo/Periodo.hbm.xml"/>
     <mapping resource="com/ipn/mx/siipg/modelo/IndicadorTienePeriodo.hbm.xml"/>
+    <mapping resource="com/ipn/mx/siipg/modelo/Notificacion.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
