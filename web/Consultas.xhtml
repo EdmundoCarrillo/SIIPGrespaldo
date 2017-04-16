@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link href="resources/css/siipg.css" rel="stylesheet" type="text/css"/>
+        <title>Consultas</title>    
+        <style>
+            .ui-growl {   
+                position:fixed;
+                top: 12%;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <p:growl id="growl" life="4500" />
+        <div class="col-lg-12" style="padding: 10px;">
+            <div class="col-lg-offset-1 col-lg-3 hidden-md hidden-sm hidden-xs"><img src="resources/images/logosep.png"></img></div>
+            <div class="col-lg-4"><center><p id="UPTitulo">#{msg.Unidad}</p></center> </div>
+            <div class="col-lg-3 hidden-md hidden-sm hidden-xs"><img src="resources//images/logoIPN.png"/></div>
+            <div class="col-lg-1"></div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <hr/>
+        <h:form>
+            <div class="col-lg-12 hidden-sm hidden-xs">
+                <div class="col-lg-12 hidden-sm hidden-xs" style="top:10px">
+
+                    <center><p id="UPTitulo2">Consultar indicadores por grafica  </p> </center>
+                </div>   
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="col-lg-12">
+                    <center>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Rango de periodos a procesar"/>
+                            <h:outputText value=""/>
+                            
+                            <p class="text-black" style="padding-right: 10px;padding-top: 6px "> Periodo Inicial</p>
+                            <p:selectOneMenu value="#{dataScrollerIndicador.indice}" >
+
+                                <f:selectItems value="#{periodoController.periodos}"
+                                               var="periodo" itemLabel="#{periodo.periodo}" itemValue="#{periodo.id}" />
+                            </p:selectOneMenu>
+
+                            <p class="text-black" style="padding-right: 18px;padding-top: 6px "> Periodo Final</p>
+                            <p:selectOneMenu value="#{dataScrollerIndicador.indice2}" >
+                                <f:selectItems value="#{periodoController.periodos}"
+                                               var="periodo2" itemLabel="#{periodo2.periodo}" itemValue="#{periodo2.id}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <div></div>
+                        <p:commandButton style="top: 5px;left: 50px" id="process" value="Procesar" actionListener="#{dataScrollerIndicador.validar()}" update="growl, ejet" />
+
+                    </center>                
+                </div>
+            </div>
+
+            <div class="row">  
+                <div class="col-lg-12 hidden-sm hidden-xs">
+                    <div class="col-lg-12 hidden-sm hidden-xs" style="top:10px">                
+                        <center>
+                            <p id="UPTitulo2">Eje Temático  </p>
+                            <p:selectOneMenu id="ejet" value="#{dataScrollerIndicador.index}" style="top: 3px" disabled="#{!dataScrollerIndicador.procesa}">
+                                <f:selectItem itemLabel="Seleccione un eje" itemValue="0" />
+                                <f:selectItems value="#{ejeTematicoController.items}" var="eje" itemLabel="#{eje.nombre}" itemValue="#{eje.id}"/>
+                                <p:ajax listener="#{dataScrollerIndicador.generaindicador()}" event="change" update="tablaind" />
+                            </p:selectOneMenu> 
+                        </center>               
+                    </div>   
+                </div>
+            </div> 
+            <div class="row" id="tablain">
+                <div  class="col-lg-12 hidden-sm hidden-xs"  style="top: 70px"  >
+                    <p:dataScroller id="tablaind" value="#{dataScrollerIndicador.list}" var="indicador" chunkSize="10">                                                
+                        <p:panelGrid layout="grid" columns="2">                            
+                                <h:outputText style="font-weight: bold;" value="Eje Temático"/>
+                                <h:outputText value="#{indicador.ejetematico.nombre}"/>
+                            
+                                <h:outputText style="font-weight: bold;" value="Indicador"/>
+                                <h:outputText value="#{indicador.nombre}"/>
+                            
+                                <h:outputText style="font-weight: bold;" value="Descripción"/>
+                                <h:outputText value="#{indicador.ejetematico.descripcion}"/>
+                            
+                                <h:outputText style="font-weight: bold;" value="Temporalidad(Inicio)"/>
+                                <h:outputText value="#{periodoController.periodos.get(dataScrollerIndicador.indice-1).periodo}"/>                                
+                            
+                                <h:outputText style="font-weight: bold;" value="Temporalidad(Fin)"/>
+                                <h:outputText value="#{periodoController.periodos.get(dataScrollerIndicador.indice2-1).periodo}"/>
+                                
+                                <h:outputText style="font-weight: bold;" value="Comentarios"/>
+                                <h:outputText value="#{indicador.comentariog}"/>
+                            
+                        </p:panelGrid>
+                        <div class="ui-g">
+                            <div class="ui-g-3">
+                                <p:dataTable value="#{dataScrollerIndicador.getPeriodos(indicador.id)}" var="periodos"
+                                                style="text-align: left; border-collapse: collapse; margin-bottom: 20px; width: 400px">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Periodo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{periodos.periodo.periodo}" style="align-content: center"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Eje #{dataScrollerIndicador.indice}  Indicador #{indicador.id} "/>
+                                        </f:facet>
+                                        <h:outputText value="#{periodos.resultado * 100}" style="text-align: center"/>
+                                    </p:column>         
+                                </p:dataTable>
+                            </div>
+                            <div class="ui-g-7">
+                                <p:chart type="#{dataScrollerIndicador.getformat(indicador.formato.formato)}" model="#{dataScrollerIndicador.data(indicador.formato.formato, indicador.id)}" widgetVar="image_#{indicador.id}" class="imageToBeExported-#{indicador.id}" style="width: 700px"/>
+                            </div>
+                            <div class="ui-g-2">
+                                <p:button id="generateReport" value="Reporte PDF" onclick="GenerarReporte(#{indicador.id}, '#{indicador.nombre}'); return false;"></p:button>
+                            </div>                            
+                        </div>                        
+                    </p:dataScroller>
+                </div>  
+            </div>  
+        </h:form>
+        <form action="#{administrarGraficaController.getReportServerUrl()}" name="reportForm" method="POST">
+            <input type="hidden" name="id" value="" />
+            <input type="hidden" name="name" value="" />
+            <input type="hidden" name="image" value=""/>
+        </form>
+        <script>
+            function GenerarReporte(id, name) {                
+                var image = PF("image_" + id).exportAsImage();                
+                $("input[name='image']").val(image.src);
+                $("input[name='id']").val(id);
+                $("input[name='name']").val(name);
+                $("form[name='reportForm']").submit();
+            }
+        </script>
+        <hr/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="col-lg-12"  style="background-color: black; padding: 8px;">
+            <img src="resources/images/fbw.png"  alt=""/>
+            <img src="resources/images/twitterw.png"  alt=""/>
+            <img src="resources/images/youtubewpng.png"  alt=""/>
+        </div>
+        <div class="col-lg-12 hidden-xs" id="UPFooter" >
+            <div class="col-lg-offset-2 col-lg-8">
+                <br></br>
+                <center><strong>#{msg.Institucion}</strong></center>
+                <center>#{msg.Direccion}</center>  
+                <p></p>
+            </div>
+        </div>
+    </h:body>    
+</html>
