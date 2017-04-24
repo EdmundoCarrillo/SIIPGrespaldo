@@ -36,17 +36,56 @@ public class AreaPolitecnicaDaoImpl implements AreaPolitecnicaDao {
 
     @Override
     public void newAreaPolitecnica(Areapolitecnica areaPolitecnica) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        try {
+            tx.begin();
+            session.save(areaPolitecnica);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
     }
 
     @Override
     public void updateAreaPolitecnica(Areapolitecnica areaPolitecnica) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        try {
+            tx.begin();
+            session.update(areaPolitecnica);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
     }
 
     @Override
     public void deleteAreaPolitecnica(Areapolitecnica areaPolitecnica) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        try {
+            tx.begin();
+            session.delete(areaPolitecnica);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
     }
 
 //    public static void main(String[] args) {

@@ -22,7 +22,7 @@
     <h:body style="background-color:whitesmoke;">
 
         <h:form >
-            <p:dataTable value="#{variableCheckController.items}" var="variable" widgetVar="variablesCheckTable" 
+            <p:dataTable id="checkDataList" value="#{variableCheckController.items}" var="variable" widgetVar="variablesCheckTable" 
                          style="text-align: left; border-collapse: collapse; margin-bottom: 20px;"
                          paginator="true" rows="15"  
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -53,23 +53,24 @@
                     <h:outputText value="#{variable.valor}"/>
                 </p:column>
 
-                <p:column filterBy="#{variable.estatus}" filterMatchMode="equals" style="width:300px;">
-                    <f:facet name="header">
-                        <h:outputText value="Estatus"/>
-                    </f:facet>
-                    <f:facet name="filter">
-                        <p:selectOneButton onchange="PF('variablesCheckTable').filter()">
-                            <f:converter converterId="javax.faces.Integer" />
-                            <f:selectItem itemLabel="Todos" itemValue="" />
-                            <f:selectItem itemLabel="No valido" itemValue="0" />
-                            <f:selectItem itemLabel="Valido" itemValue="1" />
-                        </p:selectOneButton>
-                    </f:facet>
+                <p:column headerText="Estatus"  style="width:300px;">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:selectOneRadio value="#{variable.estatus}">
+                                <f:selectItem itemLabel="Valido" itemValue="1" />
+                                <f:selectItem itemLabel="No valido" itemValue="0" />
+                            </p:selectOneRadio>      
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:selectOneRadio value="#{variableCheckController.estatus}">
+                                <f:selectItem itemLabel="Valido" itemValue="1" />
+                                <f:selectItem itemLabel="No valido" itemValue="0" />
+                            </p:selectOneRadio>
+                        </f:facet>
 
-                    <p:selectOneRadio value="#{variable.estatus}">
-                        <f:selectItem itemLabel="Valido" itemValue="1" />
-                        <f:selectItem itemLabel="No valido" itemValue="0" />
-                    </p:selectOneRadio>
+                    </p:cellEditor>
+
+
                 </p:column>
 
                 <p:column headerText="Observación" style="width: 350px; color: red;">
@@ -86,7 +87,7 @@
 
                 </p:column>
 
-                <p:ajax event="rowEdit" listener="#{variableCheckController.updateVariableCheck()}"/>
+                <p:ajax event="rowEdit" listener="#{variableCheckController.updateVariableCheck()}" update="checkDataList"/>
 
                 <p:column  filterBy="#{variable.periodo.periodo}" filterMatchMode="contains" filterStyle="width: 100%;" style="width: 120px;">
                     <f:facet name="header">

@@ -69,9 +69,9 @@ public class VarProveedorController implements Serializable {
 
     public void addVariableCheck(Variable var) {
         System.out.println(varFloat);
-        NotificacionDaoImpl notificacionDao= new NotificacionDaoImpl();
-        Notificacion notificacion= new Notificacion();
-        
+        NotificacionDaoImpl notificacionDao = new NotificacionDaoImpl();
+        Notificacion notificacion = new Notificacion();
+
         VariableCheckDao varCheckDao = new VariableCheckDaoImpl();
         Variablecheck varCheck = varCheckDao.checkByExistingVar(var);
 
@@ -85,21 +85,20 @@ public class VarProveedorController implements Serializable {
             varCheck.setVariable(var);
             varCheck.setPeriodo(periodoDao.periodoByMAXID());
             varCheckDao.newVariableCheck(varCheck);
-            notificacion.setNotificacion("Se ha cambiado la variable: "+varCheck.getVariable().getNombre());
-            notificacion.setVariableId(var.getId());
-            notificacion.setStatus(0);//Recien creada
-            
-            
+//            notificacion.setNotificacion("Se ha cambiado la variable: "+varCheck.getVariable().getNombre());
+//            notificacion.setVariableId(var.getId());
+//            notificacion.setStatus(0);//Recien creada
+
         } else if (varCheck.isNoIniciada() != true) {
             System.out.println("SI existe");
             varCheck.setValor(varFloat);
             varCheckDao.updateVariableCheck(varCheck);
-            notificacion.setNotificacion("Se ha cambiado la variable: "+varCheck.getVariable().getNombre());
-            notificacion.setVariableId(var.getId());
-            notificacion.setStatus(0);//Recien creada
+            //           notificacion.setNotificacion("Se ha cambiado la variable: "+varCheck.getVariable().getNombre());
+//            notificacion.setVariableId(var.getId());
+//            notificacion.setStatus(0);//Recien creada
 
         }
-        notificacionDao.newNotificacion(notificacion);
+//        notificacionDao.newNotificacion(notificacion);
 
     }
 

@@ -83,14 +83,16 @@ and open the template in the editor.
                         Indicadores  #{dataScrollerIndicador.list.size()}
                     </f:facet>
                     <f:facet name="loader">
-                        <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-                    </f:facet>
-                    <p:outputPanel>
-                        <h3>Indicador #{indicador.id}.- #{indicador.nombre} </h3>           
-                    </p:outputPanel>                    
-                    <h:panelGrid columns="3" cellspacing="10" cellpadding="20">
-                        <p:dataTable value="#{dataScrollerIndicador.getPeriodos(indicador.id)}" var="periodos"
-                                 style="text-align: left; border-collapse: collapse; margin-bottom: 20px; width: 400px">
+            <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+        </f:facet>
+                <p:outputPanel>
+                    <h3>Indicador #{indicador.id}.- #{indicador.nombre} </h3>           
+                </p:outputPanel>
+                    
+                        <h:panelGrid columns="3" cellspacing="10" cellpadding="20">
+                            <p:dataTable value="#{dataScrollerIndicador.getPeriodos(indicador.id)}" var="periodos"
+                                     style="text-align: left; border-collapse: collapse; margin-bottom: 20px; width: 400px">
+                                     
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Periodo"/>
@@ -108,18 +110,16 @@ and open the template in the editor.
                         <h:inputTextarea  value="#{indicador.comentariog}" style="height: 220px; width: 400px">
                             <p:ajax event="blur" listener="#{dataScrollerIndicador.actualiza(indicador)}" update="growl" />
                         </h:inputTextarea>
-                    </h:panelGrid>                    
-                    <p:chart  type="#{dataScrollerIndicador.getformat(indicador.formato.formato)}" widgetVar="image_#{indicador.id}" model="#{dataScrollerIndicador.data(indicador.formato.formato, indicador.id)}" class="imageToBeExported-#{indicador.id}" style="width: 700px"/>
-                    <p:button id="generateReport" value="  Generar Reporte  " onclick="GenerarReporte(#{indicador.id}, '#{indicador.nombre}'); return false;"></p:button>                                        
+                    </h:panelGrid>
+                    
+                        
+                    
                 </p:dataScroller>
+            
+            
             </div>  
-        </div>  
+</div>  
     </h:form>
-    <form action="#{administrarGraficaController.getReportServerUrl()}" name="reportForm" method="POST">
-        <input type="hidden" name="id" value="" />
-        <input type="hidden" name="name" value="" />
-        <input type="hidden" name="image" value=""/>
-    </form>
     <script>
         function GenerarReporte(id, name) {                
             console.log(id, name);

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition>
+
+        <p:dialog id="createAreaDlg" widgetVar="createAreaWi" modal="true" 
+                  resizable="false" 
+                  showEffect="explode"
+                  hideEffect="explode"
+                  header="Nueva Area">
+            <h:form id="AreaCreateForm">
+
+                <h:panelGroup>
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="Nombre" />
+                        <p:inputText  value="#{areaPolitecnicaController.current.nombre}"  required="true" style="width: 600px;" />
+
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton value="Guardar" actionListener="#{areaPolitecnicaController.createItem()}"  update=":AreaListForm:dataList,growl" oncomplete="PF('createAreaWi').hide()"/>
+                    <p:commandButton value="Cancelar" type="button" onclick="PF('createAreaWi').hide();" /> 
+                </h:panelGroup>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>  
+</html>
