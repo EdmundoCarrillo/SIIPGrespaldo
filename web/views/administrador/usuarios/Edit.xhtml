@@ -18,7 +18,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="4">
 
-                        <p:outputLabel value="Nombre:" style=" color: #0033ff; " />
+                        <p:outputLabel value="Nombres:" style=" color: #0033ff; " />
                         <p:inputText value="#{userController.current.nombre}" validatorMessage="El nombre solo debe contener caracteres validos." required="true" requiredMessage="El nombre es obligatorio" size="50" >
                             <f:validateRegex pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]+"/>
                         </p:inputText>                                    
@@ -41,14 +41,14 @@
                         <p:outputLabel value="Email:"  style="color: #0033ff;" />
                         <p:inputText value="#{userController.current.email}" required="true" size="50" />
 
-                        <p:outputLabel value="Telefonos:"  style=" color: #0033ff;" />
+                        <p:outputLabel value="Extensión"  style=" color: #0033ff;" />
                         <p:inputTextarea  value="#{userController.current.telefonos}" required="true"   />             
 
                         <p:outputLabel value="No. Empleado:*"  style=" color: #0033ff;" />
                         <p:inputText value="#{userController.current.numeroEmpleado}" required="true" size="50"  />
 
 
-                        <p:outputLabel value="Rol:"  style=" color:#0033ff;"  />
+                        <p:outputLabel value="Función:"  style=" color:#0033ff;"  />
                         <p:selectOneMenu  value="#{userController.selectedRol}"  style="width: 150px;" >
                             
                             <f:selectItems  value="#{userController.listr}"   
@@ -62,7 +62,7 @@
                         </p:selectOneRadio>
 
 
-                        <p:outputLabel value="Area"  style=" color: #0033ff;" />
+                        <p:outputLabel value="Área"  style=" color: #0033ff;" />
                         <p:selectOneMenu value="#{userController.selectedArea}"  style="width: 200px">
                             <f:selectItems value="#{userController.listArea}" var="area" itemLabel="#{area.nombre}" itemValue="#{area.id}" />
                             <p:ajax listener="#{userController.updateunidades()}" event="change" update="unidadr"  />
@@ -70,7 +70,7 @@
                     </p:panelGrid>
 
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="Unidad Responsable:"  style="color: #0033ff;" />
+                        <p:outputLabel value="Unidad Académica:"  style="color: #0033ff;" />
                         <p:selectOneMenu id="unidadr" filter="true"  value="#{userController.selectedUnidad}"  >
                             <f:selectItems value="#{userController.listu}" var="unidad" itemLabel="#{unidad.nombre}" itemValue="#{unidad.id}"/>
                         </p:selectOneMenu>

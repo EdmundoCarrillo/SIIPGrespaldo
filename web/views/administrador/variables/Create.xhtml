@@ -16,17 +16,20 @@
             <h:form id="VariablesCreateForm">
 
                 <h:panelGroup>
-                    <p:panelGrid columns="2">
+                    <p:panelGrid columns="2" id="panelVariables">
 
-                        <p:outputLabel value="Nombre" />
-                        <p:inputText  value="#{variableController.current.nombre}"  required="true" style="width: 600px;" />
+                        <p:outputLabel value="*Nombre" />
+                        <p:inputText  value="#{variableController.current.nombre}"  required="true" style="width: 600px;" >
 
-                        <h:outputText value="Unidad Academica:" />
+                            <p:ajax event="blur" listener="#{variableController.findVariableWithTheSameName()}" update="out1,saveVariableButton" />
+                        </p:inputText>
+
+                        <h:outputText value="*Unidad Academica:" />
                         <p:selectOneMenu value="#{variableController.selectedUnidad}">
                             <f:selectItems value="#{unidadController.itemsAvailableSelectOne}" var="unidad" itemLabel="#{unidad.nombre}" itemValue="#{unidad.id}"/>
                         </p:selectOneMenu>
 
-                        <h:outputLabel value="Estatus:" />
+                        <h:outputLabel value="*Estatus:" />
                         <p:selectOneRadio value="#{variableController.current.estatus}">
                             <f:selectItem itemLabel="Vigente" itemValue="1" />
                             <f:selectItem itemLabel="No vigente" itemValue="0" />
@@ -34,9 +37,12 @@
 
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Guardar" actionListener="#{variableController.createItem()}"  update=":VariableListForm:varDataList,growl" oncomplete="PF('createVarWi').hide(),PF('variablesTable').filter();"/>
-                    <p:commandButton value="Cancelar" type="button" onclick="PF('createVarWi').hide();" /> 
+                    <p:commandButton id="saveVariableButton" value="Guardar" actionListener="#{variableController.createItem()}"  update=":VariableListForm:varDataList,growl" oncomplete="PF('createVarWi').hide(),PF('variablesTable').filter();" disabled="#{variableController.disableButton}"/>
+                    <p:commandButton value="Cancelar" type="button" onclick="PF('createVarWi').hide();"  /> 
+
                 </h:panelGroup>
+                <br/><br/>
+                <p:outputLabel  id="out1" value="#{variableController.duplicateMg}" style="color: red;"/>
 
             </h:form>
         </p:dialog>

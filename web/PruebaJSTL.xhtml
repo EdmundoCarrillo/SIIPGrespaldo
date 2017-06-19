@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+    <h:head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </h:head>
+
+    <style>
+        table{
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+    <h:body style="background-color:whitesmoke;">
+        <table>
+            <thead>
+                <tr onclick="prueba()">
+                    <th class="expand"></th>
+                    <th>HEADER SUPERIOR 1</th>
+                    <th>HEADER SUPERIOR 2</th>
+                    <th>HEADER SUPERIOR 3</th>
+                    <th>HEADER SUPERIOR 4</th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <ui:repeat value="#{pruebaJstlController.tableList}" var="table">
+
+
+                    <ui:repeat value="#{table.rowList}" var="row">
+                        <ui:fragment rendered="#{row.type==1}">
+
+                            <tr  class="header-level" >
+                                <td class="expand">+</td>
+                                <ui:repeat value="#{row.cellList}" var="cell">
+                                    <ui:fragment>
+                                        <td>
+                                            #{cell.value}
+                                        </td>
+                                    </ui:fragment>
+                                </ui:repeat>
+                            </tr>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{row.type==2}">
+                            <tr class="sub-level">
+                                <td class="expand"></td>
+                                <td colspan="5">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <ui:repeat value="#{row.cellList}" var="cell2">
+                                                    <ui:fragment>
+                                                        <td>
+                                                            #{cell2.value}
+                                                        </td>
+                                                    </ui:fragment>
+                                                </ui:repeat>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </ui:fragment>
+
+
+                    </ui:repeat>
+
+                </ui:repeat>
+            </tbody>
+        </table>
+
+
+        <script>
+            $(function () {
+                $('.header-level').click(function () {
+                    $(this).next('.sub-level').find('table').toggle();
+                });
+            });
+        </script>
+
+
+    </h:body>
+</html>
+

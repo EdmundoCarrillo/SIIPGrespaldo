@@ -18,22 +18,23 @@
                 <h:panelGroup>
                     <p:panelGrid columns="2">
 
-                        <p:outputLabel value="Nombre" />
+                        <p:outputLabel value="*Nombre" />
                         <p:inputText  value="#{indicadorController.current.nombre}"  required="true" style="width: 600px;" />
 
-                        <h:outputText value="Eje Temático:" />
+                        <h:outputText value="*Eje Temático:" />
                         <p:selectOneMenu value="#{indicadorController.selectedEje}">
                             <f:selectItems value="#{ejeTematicoController.itemsAvailableSelectOne}" var="eje" itemLabel="#{eje.nombre}" itemValue="#{eje.id}"/>
                         </p:selectOneMenu>
 
-                        <h:outputText value="Descripción" />
+                        <h:outputText value="*Descripción" />
 
 
                         <p:fileUpload value="#{indicadorController.file}" mode="advanced" dragDropSupport="false"
-                                      fileUploadListener="#{indicadorController.fileUploadListener}" update="growl" fileLimit="1"/>
+                                      fileUploadListener="#{indicadorController.fileUploadListener}" update="growl" fileLimit="1"  label="Selecciona"
+                                      cancelLabel="Cancelar" uploadLabel="Subir"/>
 
 
-                        <h:outputLabel value="Estatus:" />
+                        <h:outputLabel value="*Estatus:" />
                         <p:selectOneRadio value="#{indicadorController.current.estatus}">
                             <f:selectItem itemLabel="Vigente" itemValue="1" />
                             <f:selectItem itemLabel="No vigente" itemValue="0" />

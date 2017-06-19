@@ -111,6 +111,31 @@ public class VariableDaoImpl implements VariableDao {
 
     }
 
+    @Override
+    public int findVariableWithTheSameName(String variableNombre) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.getTransaction();
+        List varList = null;
+        int result = 0;
+        try {
+            tx.begin();
+            varList = session.createQuery("from Variable v where v.nombre='" + variableNombre + "'").list();
+            tx.commit();
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println(ex.toString());
+        } finally {
+            session.close();
+        }
+
+        if (varList.size() > 0) {
+            result = 1;
+        }
+        return result;
+    }
+
 //    @Override
 //    public List<VarProveedorView> loadVarsForProveedor(Unidadresponsable unidadResponsable) {
 //        List varList = null;
@@ -129,14 +154,5 @@ public class VariableDaoImpl implements VariableDao {
 //        return varList;
 //
 //    }
-//
-//    public static void main(String[] args) {
-//        VariableDao variableDao = new VariableDaoImpl();
-//        Unidadresponsable unidadResponsable = new Unidadresponsable();
-//        unidadResponsable.setId(1);
-//        List<VarProveedorView> variableList = variableDao.loadVarsForProveedor(unidadResponsable);
-//        for (VarProveedorView var : variableList) {
-//            System.out.println(var.getNombre());
-//        }
-//    }
+
 }

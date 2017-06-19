@@ -17,7 +17,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">
 
-                        <h:outputText value="Nombre:" style=" color: #0033ff; " />
+                        <h:outputText value="Nombres:" style=" color: #0033ff; " />
                         <h:outputText value="#{userController.current.nombre}"  />                                    
 
                         <h:outputText value="Apellido Paterno:"   style="color: #0033ff;" />
@@ -32,24 +32,24 @@
                         <h:outputText value="Email:"  style="color: #0033ff;" />
                         <h:outputText value="#{userController.current.email}" />
 
-                        <h:outputText value="Telefonos:"  style=" color: #0033ff;" />
+                        <h:outputText value="Extensión:"  style=" color: #0033ff;" />
                         <h:outputText  value="#{userController.current.telefonos}"  />             
 
                         <h:outputText value="No. Empleado:"  style=" color: #0033ff;" />
                         <h:outputText value="#{userController.current.numeroEmpleado}"   />
 
 
-                        <h:outputText value="Rol:"  style=" color:#0033ff;"  />
+                        <h:outputText value="Función:"  style=" color:#0033ff;"  />
                         <h:outputText value="#{userController.current.rol.rol}"  />
 
                         <h:outputText value="Estatus:"  style=" color: #0033ff;" />
                         <h:outputText value="#{userController.current.status == 1? 'Vigente': 'No vigente'}"   />
 
 
-                        <h:outputText value="Area"  style=" color: #0033ff;" />
+                        <h:outputText value="Área"  style=" color: #0033ff;" />
                         <h:outputText value="#{userController.current.unidadresponsable.areapolitecnica.nombre}"   />
 
-                        <h:outputText value="Unidad Academica:"  style="color: #0033ff;" />
+                        <h:outputText value="Unidad Académica:"  style="color: #0033ff;" />
                         <h:outputText value="#{userController.current.unidadresponsable.nombre}"   />
 
                     </p:panelGrid>

@@ -25,5 +25,7 @@ public interface VariableDao {
     public void deleteVariable(Variable variable);
 
     public List<Variable> loadVariableByUnidad(Unidadresponsable unidadResponsable);
+    
+    public int findVariableWithTheSameName(String variableNombre);
 
 }

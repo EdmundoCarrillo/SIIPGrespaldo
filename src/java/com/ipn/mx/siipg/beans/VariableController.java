@@ -13,8 +13,10 @@ import com.ipn.mx.siipg.modelo.Variable;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @SessionScoped
@@ -23,6 +25,34 @@ public class VariableController implements Serializable {
     private Variable current;
     private List<Variable> items;
     private String selectedUnidad;
+    private String duplicateMg;
+
+    private boolean disableButton;
+
+//    @PostConstruct
+//    public void init() {
+//        this.disableButton = true;
+//    }
+    public VariableController() {
+        this.disableButton = false;
+        this.duplicateMg = "";
+    }
+
+    public String getDuplicateMg() {
+        return duplicateMg;
+    }
+
+    public void setDuplicateMg(String duplicateMg) {
+        this.duplicateMg = duplicateMg;
+    }
+
+    public boolean isDisableButton() {
+        return disableButton;
+    }
+
+    public void setDisableButton(boolean disableButton) {
+        this.disableButton = disableButton;
+    }
 
     public Variable getCurrent() {
         return current;
@@ -51,9 +81,14 @@ public class VariableController implements Serializable {
 
     public void prepareCreate() {
         current = new Variable();
+        duplicateMg = "";
+        disableButton = false;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.update("VariablesCreateForm:out1");
     }
 
     public void createItem() {
+
         try {
             VariableDao variableDao = new VariableDaoImpl();
             Unidadresponsable unidad = new Unidadresponsable();
@@ -98,6 +133,21 @@ public class VariableController implements Serializable {
     public void printError(Exception ex) {
         JsfUtil.addErrorMessage(ResourceBundle.getBundle("Bundle").getString("system.error"));
         System.out.println(ex.toString());
+    }
+
+    public void findVariableWithTheSameName() {
+        VariableDao variableDao = new VariableDaoImpl();
+        int result = variableDao.findVariableWithTheSameName(current.getNombre());
+        switch (result) {
+            case 0:
+                disableButton = false;
+                break;
+            case 1:
+                disableButton = true;
+                duplicateMg = "Ya existe una variable con el nombre que deseas ingresar.";
+                break;
+
+        }
     }
 
 }
